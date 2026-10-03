@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lückenlos: entrenador onSET-Deutsch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E9EEF3; --surface:#F8FAFC; --ink:#17264A; --muted:#5E6E86; --line:#C9D3DF;
+  --mark:#F4D03F; --mark-soft:#FBEFB0; --ok:#1F7A55; --ok-soft:#DDF1E7; --bad:#B8402A; --bad-soft:#F7E0DA;
+  --accent:#2446A8;
+  --serif:"Literata", Georgia, "Times New Roman", serif;
+  --sans:"Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10172A; --surface:#18223A; --ink:#E4E9F3; --muted:#9AA7BD; --line:#2E3A56;
+    --mark:#E7C33A; --mark-soft:#4A4220; --ok:#5CC894; --ok-soft:#18392C; --bad:#F08A73; --bad-soft:#44241E;
+    --accent:#8FA8FF; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10172A; --surface:#18223A; --ink:#E4E9F3; --muted:#9AA7BD; --line:#2E3A56;
+  --mark:#E7C33A; --mark-soft:#4A4220; --ok:#5CC894; --ok-soft:#18392C; --bad:#F08A73; --bad-soft:#44241E;
+  --accent:#8FA8FF; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+a{color:var(--accent)}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+nav.side{border-right:1px solid var(--line);padding:28px 18px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;display:flex;flex-direction:column;gap:4px}
+.brand{font-family:var(--serif);font-weight:700;font-size:1.45rem;letter-spacing:-.01em;margin:0 10px 22px}
+.brand span{display:block;font-family:var(--sans);font-weight:400;font-size:.8rem;color:var(--muted);letter-spacing:0}
+.navbtn{background:none;border:0;text-align:left;padding:9px 12px;border-radius:8px;color:var(--muted);font-weight:700;font-size:.95rem}
+.navbtn:hover{color:var(--ink);background:var(--surface)}
+.navbtn[aria-current="page"]{color:var(--ink);background:var(--surface);box-shadow:inset 3px 0 0 var(--accent)}
+.side #navSide{display:flex;flex-direction:column;gap:4px}
+.side .foot{margin-top:auto;font-size:.8rem;color:var(--muted);padding:0 10px}
+.side .foot button{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline}
+main{padding:40px clamp(18px,4vw,56px) 80px;max-width:1080px;width:100%}
+h1{font-family:var(--serif);font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.15;margin:0 0 8px;letter-spacing:-.015em}
+h2{font-family:var(--serif);font-size:1.35rem;margin:0 0 12px}
+h3{font-size:1rem;margin:0 0 6px}
+.lede{color:var(--muted);max-width:62ch;margin:0 0 28px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--surface);padding:10px 18px;border-radius:999px;font-weight:700}
+.btn:hover{opacity:.9}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.small{padding:6px 12px;font-size:.88rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+
+/* CEFR ruler: the hero */
+.ruler-wrap{padding:30px 26px 26px}
+.ruler-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:34px}
+.ruler-level{font-family:var(--serif);font-size:clamp(2.6rem,7vw,4.4rem);line-height:1;font-weight:700}
+.ruler-level small{display:block;font-family:var(--sans);font-size:.9rem;font-weight:400;color:var(--muted);margin-top:8px}
+.ruler{position:relative;height:56px;margin:0 6px}
+.ruler .bands{display:grid;grid-template-columns:repeat(5,1fr);height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+.ruler .bands div{border-right:1px solid var(--line)}
+.ruler .bands div:last-child{border-right:0}
+.ruler .fill{position:absolute;left:0;top:0;height:14px;border-radius:7px 0 0 7px;background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 9px);opacity:.85;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.ruler .labels{display:grid;grid-template-columns:repeat(5,1fr);margin-top:10px;font-weight:700;font-size:.9rem}
+.ruler .labels span{padding-left:4px;color:var(--muted)}
+.ruler .labels span.on{color:var(--ink)}
+.ruler .you{position:absolute;top:-28px;transform:translateX(-50%);background:var(--mark);color:#17264A;font-weight:700;font-size:.78rem;padding:2px 8px;border-radius:6px;white-space:nowrap;transition:left .9s cubic-bezier(.2,.8,.2,1)}
+.ruler .you::after{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--mark);border-bottom:0}
+.ruler .goal{position:absolute;top:-6px;width:2px;height:26px;background:var(--accent)}
+.ruler .goal b{position:absolute;top:30px;left:4px;font-size:.72rem;color:var(--accent);white-space:nowrap;font-weight:700;display:none}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .v{font-family:var(--serif);font-size:1.9rem;font-weight:700;line-height:1.1}
+.stat .k{font-size:.85rem;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:26px;padding-top:22px;border-top:1px dashed var(--line)}
+.bar{height:8px;background:var(--bg);border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--ink)}
+.mastery{display:grid;gap:12px}
+.mastery .m{display:grid;grid-template-columns:150px 1fr 44px;gap:10px;align-items:center;font-size:.92rem}
+.chart svg{width:100%;height:auto;display:block}
+.next{border-left:4px solid var(--mark);padding:14px 18px;background:var(--surface);border-radius:0 12px 12px 0;margin:22px 0}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.93rem}
+.list li:last-child{border-bottom:0}
+.badge{display:inline-block;font-size:.76rem;font-weight:700;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.badge.ok{color:var(--ok);border-color:var(--ok)}
+.badge.bad{color:var(--bad);border-color:var(--bad)}
+.badge.lv{color:var(--ink);border-color:var(--ink)}
+
+/* C-test sheet */
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(20px,4vw,40px)}
+.sheet .meta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.sheet h2{margin:0}
+.ctext{font-family:var(--serif);font-size:1.18rem;line-height:2.25;max-width:70ch;hyphens:none}
+.gapw{white-space:nowrap}
+.gapw input{font-family:var(--serif);font-size:1.12rem;border:0;border-bottom:2px solid var(--muted);background:var(--bg);padding:0 2px;margin:0 1px;border-radius:3px 3px 0 0;min-width:1.4ch;height:1.45em;line-height:1.3;vertical-align:baseline}
+.gapw input:focus{outline:none;background:var(--mark-soft);border-bottom-color:var(--mark)}
+.gapw.ok{color:var(--ok)}
+.gapw.ok b{border-bottom:2px solid var(--ok)}
+.gapw.bad b{color:var(--ok);border-bottom:2px solid var(--ok)}
+.gapw.bad s{color:var(--bad);text-decoration-thickness:2px;margin-right:2px}
+.gapw b{font-weight:700}
+.umlauts{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 6px}
+.umlauts button{min-width:40px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-family:var(--serif);font-size:1.05rem}
+.umlauts button:hover{border-color:var(--ink)}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:1.05rem;padding:4px 12px;border-radius:999px;border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+.tbar{height:4px;background:var(--bg);border-radius:2px;margin:-6px 0 22px;overflow:hidden}
+.tbar i{display:block;height:100%;background:var(--ink);transition:width 1s linear}
+.score{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:22px 0 8px;padding-top:18px;border-top:1px dashed var(--line)}
+.score .big{font-family:var(--serif);font-size:2.6rem;font-weight:700;line-height:1}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 18px}
+.dots span{width:28px;height:6px;border-radius:3px;background:var(--line)}
+.dots span.done{background:var(--ink)}
+.dots span.cur{background:var(--mark)}
+.levels{display:grid;gap:22px}
+.tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.tcard{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.tcard:hover{border-color:var(--ink)}
+.tcard .t{font-family:var(--serif);font-weight:600;font-size:1.05rem}
+.drill-item{font-family:var(--serif);font-size:1.2rem;line-height:2;margin:10px 0}
+.expl{font-size:.92rem;color:var(--muted);margin:4px 0 14px;padding-left:12px;border-left:3px solid var(--line)}
+.tip{font-size:.95rem}
+.tip table{border-collapse:collapse;font-size:.9rem;margin:10px 0}
+.tip th,.tip td{border:1px solid var(--line);padding:4px 10px;text-align:left}
+.tablewrap{overflow-x:auto}
+textarea{width:100%;min-height:200px;border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--surface);font-family:var(--serif);font-size:1.05rem;line-height:1.7;resize:vertical}
+.week{margin-bottom:18px}
+.week .tasks{list-style:none;padding:0;margin:10px 0 0}
+.week .tasks li{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}
+.week .tasks li:last-child{border-bottom:0}
+.week input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--ink);flex:none}
+.week .tasks li.done span{color:var(--muted);text-decoration:line-through}
+.toggle{display:flex;gap:8px;align-items:center;font-size:.92rem}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:1}
+
+:root{--dat:#7B3FB0;--gen:#A4561B}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--dat:#C9A2FF;--gen:#F2A968} }
+:root[data-theme="dark"]{--dat:#C9A2FF;--gen:#F2A968}
+.c-nom,.c-akk,.c-dat,.c-gen{font-weight:700;border-bottom:2px solid currentColor}
+.c-nom{color:var(--accent)} .c-akk{color:var(--ok)} .c-dat{color:var(--dat)} .c-gen{color:var(--gen)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:-10px 0 18px}
+.lesson{padding:clamp(20px,4vw,36px)}
+.lesson > *{max-width:72ch}
+.lesson h3{font-family:var(--serif);font-size:1.22rem;margin:30px 0 8px}
+.lesson h3:first-child{margin-top:0}
+.lesson p{margin:0 0 12px}
+.lesson ol{padding-left:22px;margin:0 0 12px}
+.lesson ol li{margin-bottom:8px}
+.lesson .demo{font-family:var(--serif);font-size:1.2rem;line-height:1.9;padding:10px 16px;border-left:3px solid var(--line)}
+.tip table,.lesson table{border-collapse:collapse;font-size:.92rem;margin:10px 0 16px}
+.tip th,.tip td,.lesson th,.lesson td{border:1px solid var(--line);padding:6px 12px;text-align:left;vertical-align:top}
+.lesson th{background:var(--bg)}
+.ex{list-style:none;margin:0;padding:0}
+.ex li{padding:12px 0;border-bottom:1px solid var(--line)}
+.ex li:last-child{border-bottom:0}
+.ex .de{font-family:var(--serif);font-size:1.15rem;line-height:1.7}
+.ex .es{color:var(--muted);font-size:.92rem}
+.lessons{display:grid;gap:14px}
+.lcard{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start}
+.lcard h3{font-family:var(--serif);font-size:1.25rem;margin:0 0 2px}
+.lcard p{margin:0}
+.lnum{font-family:var(--serif);font-size:2.2rem;font-weight:700;line-height:1;color:var(--muted)}
+.practice-cta{border-left:4px solid var(--mark)}
+.hl{background:var(--mark-soft);border-bottom:2px solid var(--mark);padding:0 3px;border-radius:2px}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;font-family:var(--sans);font-size:.92rem;line-height:1.4}
+.opt{border:1px solid var(--line);border-radius:999px;padding:5px 12px;display:inline-flex;gap:6px;align-items:center;cursor:pointer;background:var(--surface)}
+.opt:has(input:checked){border-color:var(--ink)}
+.opt.ok{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--bad);color:var(--bad);background:var(--bad-soft)}
+.opt input{accent-color:var(--ink);margin:0}
+.hint{font-family:var(--sans);font-size:.85rem;color:var(--muted);margin-left:8px}
+.mcq{margin:14px 0}
+
+.dots span.miss{background:var(--bad)}
+.quiz .qsent{font-family:var(--serif);font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.6;margin:10px 0 24px}
+.qblank{display:inline-block;min-width:5ch;border-bottom:3px solid var(--mark);background:var(--mark-soft);padding:0 6px;border-radius:3px 3px 0 0;text-align:center}
+.qblank.ok{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
+.qblank.bad{border-color:var(--bad);background:var(--bad-soft);color:var(--ink);font-weight:700}
+.qopts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:560px}
+.qopt{display:flex;align-items:center;gap:12px;text-align:left;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-family:var(--serif);font-size:1.2rem}
+.qopt:hover:not(:disabled){border-color:var(--ink)}
+.qopt .k{font-family:var(--sans);font-size:.75rem;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:6px;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.qopt.ok{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
+.qopt.bad{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.qopt.dim{opacity:.5}
+.qopt:disabled{cursor:default}
+select.choice{font-family:var(--serif);font-size:1.02rem;border:0;border-bottom:2px solid var(--muted);background:var(--bg);border-radius:4px 4px 0 0;padding:1px 4px;margin:0 2px;color:var(--ink);max-width:16ch}
+select.choice:focus{outline:none;background:var(--mark-soft);border-bottom-color:var(--mark)}
+.ctext.easy{line-height:2.4}
+nav.bottom{display:none}
+
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  nav.side{display:none}
+  main{padding:24px 16px 110px}
+  nav.bottom{display:flex;position:fixed;left:0;right:0;bottom:0;padding-bottom:env(safe-area-inset-bottom,0px);background:var(--surface);border-top:1px solid var(--line);overflow-x:auto;z-index:10}
+  nav.bottom .navbtn{flex:1 0 auto;text-align:center;font-size:.8rem;padding:12px 12px;border-radius:0}
+  nav.bottom .navbtn[aria-current="page"]{box-shadow:inset 0 3px 0 var(--accent)}
+  .g2,.g3{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mastery .m{grid-template-columns:110px 1fr 40px}
+  .ctext{font-size:1.08rem;line-height:2.2}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Secciones">
+    <div class="brand">Lückenlos<span>Entrenador onSET-Deutsch</span></div>
+    <div id="navSide"></div>
+    <div class="foot">
+      <p id="syncNote">Guardando en este navegador.</p>
+      <button id="resetBtn">Borrar mi progreso</button>
+    </div>
+  </nav>
+  <main id="main" tabindex="-1"></main>
+</div>
+<nav class="bottom" id="navBottom" aria-label="Secciones"></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   CONTENIDO: textos en alemán por nivel
+   ========================================================= */
+const TEXTS = [
+{id:"a1-1",level:"A1",title:"Meine Familie",text:"Ich heiße Laura und komme aus Kolumbien. Meine Familie ist nicht sehr groß. Ich habe einen Bruder und eine Schwester. Mein Bruder ist zwanzig Jahre alt und studiert Medizin in der Hauptstadt. Meine Schwester geht noch zur Schule. Mein Vater arbeitet in einer Bank und meine Mutter ist Lehrerin. Am Wochenende kochen wir oft zusammen und essen im Garten. Danach spielen wir gern Karten. Ich liebe meine Familie sehr."},
+{id:"a1-2",level:"A1",title:"Mein Tag",text:"Mein Tag beginnt sehr früh. Ich stehe um sechs Uhr auf und trinke zuerst einen Kaffee. Dann dusche ich und ziehe mich an. Um sieben Uhr fahre ich mit dem Bus zur Arbeit. Ich arbeite in einem kleinen Büro im Zentrum. Mittags esse ich mit meinen Kollegen in der Kantine. Am Nachmittag habe ich oft viele Termine. Um fünf Uhr bin ich wieder zu Hause. Abends lese ich ein Buch oder sehe fern. Um elf Uhr gehe ich ins Bett."},
+{id:"a1-3",level:"A1",title:"Im Supermarkt",text:"Heute gehe ich in den Supermarkt. Ich brauche Milch, Brot und Eier für das Frühstück. Mein Freund möchte am Abend Nudeln kochen, deshalb kaufe ich auch Tomaten und Käse. Das Obst ist heute sehr billig. Ich nehme zwei Kilo Äpfel und ein paar Bananen. An der Kasse warten viele Leute. Die Kassiererin ist aber sehr schnell und freundlich. Ich bezahle mit meiner Karte. Zu Hause mache ich den Kühlschrank voll."},
+{id:"a2-1",level:"A2",title:"Wohnungssuche",text:"Seit zwei Monaten suche ich eine neue Wohnung. Meine alte Wohnung ist zu klein und liegt weit weg von der Universität. Jeden Tag lese ich die Anzeigen im Internet, aber die Mieten in der Stadt sind sehr hoch. Letzte Woche habe ich endlich eine schöne Wohnung gefunden. Sie hat zwei Zimmer, eine helle Küche und einen kleinen Balkon. Der Vermieter war sehr nett und hat mir alles gezeigt. Leider wollten noch zehn andere Personen die Wohnung haben. Jetzt warte ich auf eine Antwort und hoffe, dass ich Glück habe."},
+{id:"a2-2",level:"A2",title:"Urlaub am Meer",text:"Letzten Sommer war ich mit meinen Freunden an der Nordsee. Wir sind mit dem Zug gefahren, weil das billiger war als das Flugzeug. Unser Hotel lag direkt am Strand, und wir konnten jeden Morgen das Meer sehen. Das Wetter war leider nicht immer schön. Oft war es windig und manchmal hat es auch geregnet. Trotzdem sind wir viel spazieren gegangen und haben frischen Fisch gegessen. An einem Tag haben wir eine kleine Insel besucht. Es war ein wunderbarer Urlaub, und nächstes Jahr wollen wir wieder hinfahren."},
+{id:"a2-3",level:"A2",title:"Beim Arzt",text:"Gestern hatte ich starke Kopfschmerzen und Fieber. Deshalb bin ich heute Morgen zum Arzt gegangen. Im Wartezimmer saßen schon viele Patienten, und ich musste fast eine Stunde warten. Die Ärztin hat mich genau untersucht und mir einige Fragen gestellt. Sie hat gesagt, dass ich eine Grippe habe. Ich soll drei Tage im Bett bleiben und viel Tee trinken. Außerdem hat sie mir ein Medikament verschrieben. Für meinen Chef habe ich eine Krankmeldung bekommen. Jetzt liege ich auf dem Sofa und hoffe, dass es mir bald besser geht."},
+{id:"a2-4",level:"A2",title:"Sport in Deutschland",text:"Viele Menschen in Deutschland machen regelmäßig Sport. Besonders beliebt sind Fußball, Radfahren und Schwimmen. In fast jeder Stadt gibt es Sportvereine, in denen man mit anderen Leuten trainieren kann. Viele Vereine sind nicht teuer, und oft kann man zuerst kostenlos ein Training ausprobieren. Andere Menschen gehen lieber allein joggen, zum Beispiel am Morgen vor der Arbeit oder am Abend im Park. Ärzte empfehlen, mindestens zweimal pro Woche Sport zu machen. Das ist gut für den Körper und auch für die Seele."},
+{id:"a2-5",level:"A2",title:"Eine Einladung",text:"Nächsten Samstag feiere ich meinen dreißigsten Geburtstag. Ich möchte alle meine Freunde und Kollegen zu einer Party einladen. Die Feier beginnt um acht Uhr abends in meiner Wohnung. Für das Essen sorge ich selbst, aber es wäre schön, wenn jeder etwas zu trinken mitbringt. Wir können tanzen, Spiele spielen oder einfach auf dem Balkon sitzen und reden. Bitte sagt mir bis Mittwoch, ob ihr kommen könnt. Wenn ihr den Weg nicht kennt, schicke ich euch gern eine Karte. Ich freue mich sehr auf euch!"},
+{id:"b1-1",level:"B1",title:"Studieren in Deutschland",text:"Jedes Jahr kommen viele internationale Studierende nach Deutschland. Ein wichtiger Grund dafür ist, dass an staatlichen Universitäten meistens keine Studiengebühren bezahlt werden müssen. Außerdem haben deutsche Hochschulen einen guten Ruf, besonders in den Bereichen Technik und Naturwissenschaften. Trotzdem ist der Anfang für viele nicht leicht. Man muss eine Wohnung finden, ein Konto eröffnen und sich bei den Behörden anmelden. Wer die Sprache noch nicht gut beherrscht, hat oft Schwierigkeiten im Alltag. Deshalb bieten viele Universitäten spezielle Beratungsstellen und Sprachkurse an. Mit etwas Geduld gewöhnen sich die meisten Studierenden schnell an das neue Leben."},
+{id:"b1-2",level:"B1",title:"Arbeiten im Homeoffice",text:"Seit einigen Jahren arbeiten immer mehr Menschen von zu Hause aus. Viele Beschäftigte schätzen es, dass sie nicht mehr jeden Tag zur Arbeit fahren müssen. Dadurch sparen sie Zeit und Geld und können ihren Tag flexibler planen. Allerdings hat das Homeoffice auch Nachteile. Manche Menschen fühlen sich einsam, weil ihnen der Kontakt zu den Kollegen fehlt. Anderen fällt es schwer, Arbeit und Freizeit klar voneinander zu trennen. Experten raten deshalb, feste Arbeitszeiten einzuhalten und einen eigenen Arbeitsplatz einzurichten. Viele Firmen setzen inzwischen auf ein Modell, bei dem die Mitarbeiter teils im Büro und teils zu Hause arbeiten."},
+{id:"b1-3",level:"B1",title:"Mülltrennung",text:"In Deutschland wird der Müll sehr genau getrennt. In den meisten Haushalten gibt es mehrere Tonnen für verschiedene Arten von Abfall. Papier kommt in die blaue Tonne, Verpackungen aus Plastik in den gelben Sack und Essensreste in die Biotonne. Glasflaschen bringt man zu speziellen Containern, die nach Farben sortiert sind. Für viele Flaschen bekommt man außerdem Pfand zurück, wenn man sie im Supermarkt abgibt. Für Besucher aus dem Ausland wirkt dieses System oft kompliziert. Wer aber eine Weile in Deutschland lebt, gewöhnt sich meistens schnell daran. Das Ziel ist, möglichst viele Materialien wiederzuverwenden und die Umwelt zu schützen."},
+{id:"b1-4",level:"B1",title:"Soziale Medien",text:"Soziale Medien spielen im Leben junger Menschen eine große Rolle. Viele Jugendliche verbringen täglich mehrere Stunden auf verschiedenen Plattformen. Dort teilen sie Fotos, schauen Videos und halten Kontakt zu ihren Freunden. Für viele ist das eine wichtige Möglichkeit, sich auszutauschen und neue Ideen zu entdecken. Gleichzeitig warnen Fachleute vor den Risiken. Wer ständig online ist, schläft oft schlechter und kann sich weniger gut konzentrieren. Außerdem vergleichen sich viele Nutzer mit anderen und fühlen sich dadurch unzufrieden. Eltern und Schulen sollten Jugendlichen deshalb helfen, bewusst und kritisch mit diesen Medien umzugehen."},
+{id:"b1-5",level:"B1",title:"Das Ehrenamt",text:"Mehr als ein Drittel der Menschen in Deutschland engagiert sich ehrenamtlich. Das bedeutet, dass sie in ihrer Freizeit freiwillig und ohne Bezahlung für andere arbeiten. Manche helfen bei der Feuerwehr, andere trainieren Kinder im Sportverein oder begleiten alte Menschen beim Einkaufen. Viele Organisationen könnten ohne diese Unterstützung gar nicht existieren. Die Freiwilligen berichten häufig, dass ihnen die Arbeit viel Freude macht. Sie lernen neue Menschen kennen und haben das Gefühl, etwas Sinnvolles zu tun. Außerdem sammeln sie Erfahrungen, die ihnen später im Beruf nützen können. Deshalb ist das Ehrenamt auch für junge Leute attraktiv."},
+{id:"b2-1",level:"B2",title:"Künstliche Intelligenz",text:"Künstliche Intelligenz verändert inzwischen zahlreiche Bereiche unseres Alltags. Programme übersetzen Texte, erkennen Gesichter auf Fotos und helfen Ärzten bei der Diagnose von Krankheiten. Befürworter betonen, dass solche Systeme die Produktivität steigern und Menschen von monotonen Aufgaben entlasten können. Kritiker hingegen befürchten, dass zahlreiche Arbeitsplätze verloren gehen könnten. Darüber hinaus stellt sich die Frage, wer die Verantwortung trägt, wenn eine Maschine eine falsche Entscheidung trifft. Viele Wissenschaftler fordern deshalb klare gesetzliche Regeln für die Entwicklung und den Einsatz dieser Technologie. Entscheidend wird sein, ob es gelingt, die Chancen zu nutzen, ohne die Risiken zu unterschätzen."},
+{id:"b2-2",level:"B2",title:"Leben in der Stadt",text:"Weltweit ziehen immer mehr Menschen vom Land in die Städte. Bereits heute lebt über die Hälfte der Weltbevölkerung in urbanen Räumen, und Prognosen zufolge wird dieser Anteil weiter steigen. Die Städte bieten bessere Bildungsangebote, eine umfassendere medizinische Versorgung und vielfältige berufliche Perspektiven. Andererseits führt das rasche Wachstum zu erheblichen Problemen. Wohnraum wird knapp und teuer, der Verkehr nimmt zu und die Luftqualität verschlechtert sich. Gleichzeitig verlieren viele ländliche Regionen ihre jungen Einwohner, sodass Schulen und Geschäfte schließen müssen. Stadtplaner suchen daher nach Konzepten, die ein nachhaltiges Zusammenleben ermöglichen und zugleich die Attraktivität des ländlichen Raums stärken."},
+{id:"b2-3",level:"B2",title:"Mehrsprachigkeit",text:"Die Fähigkeit, mehrere Sprachen zu sprechen, gilt heute als wichtige Kompetenz. Studien deuten darauf hin, dass mehrsprachige Menschen flexibler denken und sich leichter auf neue Situationen einstellen können. Zudem erleichtern Fremdsprachenkenntnisse den Zugang zu anderen Kulturen und verbessern die Chancen auf dem internationalen Arbeitsmarkt. Dennoch ist das Erlernen einer Sprache im Erwachsenenalter mit erheblichem Aufwand verbunden. Neben dem Wortschatz müssen Lernende auch grammatische Strukturen verinnerlichen, die sich stark von ihrer Muttersprache unterscheiden können. Experten empfehlen, regelmäßig und in kleinen Einheiten zu lernen, anstatt sich vor einer Prüfung stundenlang zu überfordern. Entscheidend ist vor allem die Motivation."},
+{id:"b2-4",level:"B2",title:"Klimawandel und Landwirtschaft",text:"Der Klimawandel stellt die Landwirtschaft vor enorme Herausforderungen. Längere Trockenperioden, heftige Unwetter und steigende Temperaturen gefährden in vielen Regionen die Ernten. Besonders betroffen sind Länder, deren Wirtschaft stark vom Anbau bestimmter Produkte abhängt, etwa Kaffee oder Kakao. Um sich an die veränderten Bedingungen anzupassen, experimentieren Landwirte mit widerstandsfähigeren Pflanzensorten und effizienteren Bewässerungssystemen. Zugleich trägt die Landwirtschaft selbst erheblich zum Ausstoß von Treibhausgasen bei, vor allem durch die Tierhaltung. Eine nachhaltige Lösung erfordert daher nicht nur technische Innovationen, sondern auch Veränderungen im Konsumverhalten. Letztlich betrifft diese Frage jeden Einzelnen."},
+{id:"b2-5",level:"B2",title:"Lesen im digitalen Zeitalter",text:"Obwohl digitale Medien allgegenwärtig sind, ist das gedruckte Buch keineswegs verschwunden. Zwar lesen viele Menschen inzwischen Nachrichten und Romane auf dem Smartphone oder dem Tablet, doch die Verkaufszahlen gedruckter Bücher sind in den letzten Jahren erstaunlich stabil geblieben. Forscher haben herausgefunden, dass Leser längere Texte auf Papier häufig besser verstehen und sich an mehr Details erinnern. Als Ursache vermuten sie, dass am Bildschirm eher oberflächlich gelesen wird, weil man gewohnt ist, schnell zu scrollen. Dennoch bieten digitale Formate unbestreitbare Vorteile, etwa beim Suchen bestimmter Begriffe. Vermutlich werden beide Formen auch künftig nebeneinander bestehen."},
+{id:"a1-4",level:"A1",title:"Meine Wohnung",text:"Ich wohne in einer kleinen Wohnung in der Stadt. Die Wohnung hat zwei Zimmer, eine Küche und ein Bad. Im Wohnzimmer stehen ein Sofa, ein Tisch und zwei Stühle. Mein Schlafzimmer ist klein, aber sehr hell. Die Küche ist neu und modern. Ich koche gern und oft. Vom Balkon sehe ich einen schönen Park. Die Miete ist nicht so teuer. Meine Nachbarn sind sehr nett und ruhig. Ich bin hier sehr glücklich."},
+{id:"a1-5",level:"A1",title:"Das Wetter",text:"Heute ist das Wetter sehr schön. Die Sonne scheint und es ist warm. Viele Leute sitzen im Park oder gehen spazieren. Die Kinder spielen auf dem Spielplatz und essen Eis. Am Nachmittag fahre ich mit dem Fahrrad an den See. Dort schwimme ich und lese ein Buch. Morgen soll es leider regnen. Dann bleibe ich zu Hause und sehe einen Film. Ich mag den Sommer sehr."},
+{id:"a1-6",level:"A1",title:"Meine Hobbys",text:"Ich habe viele Hobbys. Am liebsten spiele ich Gitarre. Ich spiele jeden Abend eine Stunde. Am Wochenende treffe ich meine Freunde und wir machen zusammen Musik. Ich lese auch gern, besonders Krimis. Im Sommer gehe ich oft wandern. Meine Schwester tanzt gern und malt Bilder. Mein Vater kocht gern für die ganze Familie. Und was machst du in deiner Freizeit?"},
+{id:"a1-7",level:"A1",title:"Im Restaurant",text:"Heute Abend gehen wir ins Restaurant. Der Kellner bringt uns die Speisekarte. Ich bestelle eine Suppe und einen Salat. Mein Mann nimmt ein Schnitzel mit Kartoffeln. Zum Trinken bestellen wir Wasser und ein Glas Wein. Das Essen ist sehr lecker. Zum Nachtisch essen wir einen Kuchen. Dann bezahlen wir die Rechnung. Der Abend war wirklich schön."},
+{id:"a2-6",level:"A2",title:"Der erste Arbeitstag",text:"Gestern war mein erster Tag in der neuen Firma. Ich war sehr nervös und bin schon um sechs Uhr aufgestanden. Im Büro hat mich meine Chefin freundlich begrüßt und mir die Kollegen vorgestellt. Danach hat sie mir meinen Arbeitsplatz gezeigt. Am Vormittag musste ich viele Formulare ausfüllen. Mittags sind wir zusammen in die Kantine gegangen. Am Nachmittag habe ich meine erste Aufgabe bekommen. Am Abend war ich müde, aber sehr zufrieden."},
+{id:"a2-7",level:"A2",title:"Auf dem Wochenmarkt",text:"Jeden Samstag gehe ich auf den Wochenmarkt. Dort kaufe ich frisches Obst und Gemüse direkt von den Bauern. Die Produkte sind oft etwas teurer als im Supermarkt, aber sie schmecken viel besser. Außerdem kann man mit den Verkäufern sprechen und fragen, woher die Waren kommen. Mein Lieblingsstand verkauft Käse aus der Region. Die Verkäuferin kennt mich schon und gibt mir manchmal ein Stück zum Probieren. Nach dem Einkaufen trinke ich meistens noch einen Kaffee."},
+{id:"a2-8",level:"A2",title:"Ein Umzug",text:"Letzten Monat bin ich in eine andere Stadt gezogen. Der Umzug war anstrengend, weil ich sehr viele Sachen hatte. Zum Glück haben mir zwei Freunde geholfen. Wir haben einen großen Wagen gemietet und alle Möbel eingepackt. Die Fahrt hat fast fünf Stunden gedauert. In der neuen Wohnung mussten wir alles in den dritten Stock tragen, denn es gab keinen Aufzug. Am Abend haben wir Pizza bestellt und auf dem Boden gegessen. Jetzt fühle ich mich hier schon sehr wohl."},
+{id:"a2-9",level:"A2",title:"Deutsch lernen",text:"Seit sechs Monaten lerne ich Deutsch. Zweimal pro Woche gehe ich in einen Sprachkurs an der Volkshochschule. In meinem Kurs sind Leute aus vielen verschiedenen Ländern. Unsere Lehrerin ist sehr geduldig und erklärt die Grammatik sehr gut. Am schwierigsten finde ich die Artikel, weil man sie für jedes Wort lernen muss. Zu Hause höre ich Podcasts und schreibe neue Wörter in ein Heft. Manchmal spreche ich mit meinem Nachbarn, der aus Berlin kommt. So lerne ich jeden Tag etwas Neues."},
+{id:"a2-10",level:"A2",title:"Ein Wochenende in Hamburg",text:"Am letzten Wochenende habe ich meine Freundin in Hamburg besucht. Am Freitagabend bin ich mit dem Zug angekommen und sie hat mich am Bahnhof abgeholt. Am Samstag haben wir eine Hafenrundfahrt gemacht und viele große Schiffe gesehen. Danach sind wir durch die Altstadt gelaufen und haben ein Fischbrötchen gegessen. Am Abend waren wir in einem Konzert in der neuen Philharmonie. Am Sonntag hat es leider den ganzen Tag geregnet. Deshalb sind wir in ein Museum gegangen. Ich möchte bald wieder nach Hamburg fahren."},
+{id:"b1-6",level:"B1",title:"Fahrrad statt Auto",text:"In vielen deutschen Städten fahren immer mehr Menschen mit dem Fahrrad zur Arbeit. Dafür gibt es mehrere Gründe. Zum einen ist das Fahrrad oft schneller als das Auto, weil man nicht im Stau steht und keinen Parkplatz suchen muss. Zum anderen ist Radfahren gesund und kostet fast nichts. Viele Städte haben deshalb neue Radwege gebaut und bieten Leihräder an. Trotzdem gibt es noch Probleme, denn an manchen Straßen ist das Fahren gefährlich. Die Politik muss also weiter in eine sichere Infrastruktur investieren. Nur so werden noch mehr Menschen auf das Auto verzichten."},
+{id:"b1-7",level:"B1",title:"Das Praktikum",text:"Für viele Studierende ist ein Praktikum ein wichtiger Schritt in das Berufsleben. Während eines Praktikums kann man die Arbeit in einem Unternehmen kennenlernen und praktische Erfahrungen sammeln. Oft merkt man erst dann, ob der gewünschte Beruf wirklich zu einem passt. Außerdem knüpft man Kontakte, die später bei der Jobsuche helfen können. Leider sind nicht alle Praktika bezahlt, was für manche Studierende ein Problem ist. Wer ein Praktikum sucht, sollte sich früh bewerben und seine Unterlagen sorgfältig vorbereiten. Ein gutes Anschreiben ist dabei besonders wichtig."},
+{id:"b1-8",level:"B1",title:"Gesunde Ernährung",text:"Immer mehr Menschen achten darauf, was sie essen. Ärzte empfehlen, viel Obst und Gemüse zu essen und nicht zu viel Zucker oder Fett. Auch regelmäßige Mahlzeiten sind wichtig, damit der Körper genug Energie hat. Viele Leute haben jedoch wenig Zeit und essen deshalb oft Fertiggerichte oder Fast Food. Diese Produkte sind praktisch, aber meistens nicht besonders gesund. Eine gute Lösung kann sein, am Wochenende für mehrere Tage vorzukochen. So spart man unter der Woche Zeit und isst trotzdem ausgewogen. Wer gesund isst, fühlt sich meist auch fitter."},
+{id:"b1-9",level:"B1",title:"Reisen mit dem Zug",text:"Wer in Europa reisen möchte, kann oft bequem den Zug nehmen. Viele große Städte sind durch schnelle Verbindungen miteinander verbunden. Im Vergleich zum Flugzeug muss man nicht lange vorher am Flughafen sein und kommt direkt im Zentrum der Stadt an. Außerdem ist die Reise mit dem Zug deutlich besser für die Umwelt. Während der Fahrt kann man lesen, arbeiten oder einfach die Landschaft genießen. Ein Nachteil ist allerdings, dass die Tickets manchmal teuer sind, wenn man sie spät kauft. Es lohnt sich daher, früh zu buchen und nach Sonderangeboten zu suchen."},
+{id:"b1-10",level:"B1",title:"Wohngemeinschaften",text:"Viele Studierende in Deutschland wohnen in einer Wohngemeinschaft, kurz WG. In einer WG hat jede Person ein eigenes Zimmer, während Küche und Bad gemeinsam genutzt werden. Der größte Vorteil ist, dass die Miete deutlich günstiger ist als für eine eigene Wohnung. Außerdem ist man selten allein und lernt schnell neue Leute kennen. Natürlich kann es auch Streit geben, zum Beispiel wenn jemand nie putzt oder nachts laute Musik hört. Deshalb machen viele WGs einen Putzplan und klare Regeln. Wer eine WG sucht, muss sich oft bei einem sogenannten Casting vorstellen. Dabei prüfen die Mitbewohner, ob man zu ihnen passt."},
+{id:"b2-6",level:"B2",title:"Fachkräftemangel",text:"Deutschland leidet in vielen Branchen unter einem zunehmenden Fachkräftemangel. Besonders in der Pflege, im Handwerk und in technischen Berufen bleiben zahlreiche Stellen über Monate unbesetzt. Eine wesentliche Ursache ist der demografische Wandel, denn in den kommenden Jahren gehen viele Beschäftigte in Rente, während weniger junge Menschen nachrücken. Um dieser Entwicklung entgegenzuwirken, setzt die Regierung verstärkt auf die Zuwanderung qualifizierter Arbeitskräfte aus dem Ausland. Allerdings erschweren bürokratische Hürden und die langwierige Anerkennung ausländischer Abschlüsse diesen Prozess erheblich. Fachleute fordern daher schnellere Verfahren und mehr Unterstützung beim Spracherwerb. Nur so kann Deutschland international konkurrenzfähig bleiben."},
+{id:"b2-7",level:"B2",title:"Wissenschaft und Öffentlichkeit",text:"Die Kommunikation zwischen Wissenschaft und Gesellschaft hat in den letzten Jahren erheblich an Bedeutung gewonnen. Spätestens seit der Pandemie ist deutlich geworden, wie stark politische Entscheidungen von wissenschaftlichen Erkenntnissen abhängen. Gleichzeitig zeigte sich, dass viele Bürger Schwierigkeiten haben, komplexe Forschungsergebnisse richtig einzuordnen. Hinzu kommt, dass sich Falschinformationen über soziale Netzwerke rasant verbreiten und das Vertrauen in die Forschung untergraben können. Zahlreiche Universitäten bemühen sich deshalb, ihre Arbeit verständlicher darzustellen, etwa durch öffentliche Vorträge oder Podcasts. Ob diese Maßnahmen ausreichen, bleibt jedoch umstritten. Fest steht, dass Transparenz ein entscheidender Faktor ist."},
+{id:"b2-8",level:"B2",title:"Mode und Nachhaltigkeit",text:"Der Konsum von Kleidung hat sich in den vergangenen zwei Jahrzehnten nahezu verdoppelt. Verantwortlich dafür ist vor allem die sogenannte Fast Fashion, bei der Modeketten in kurzen Abständen neue Kollektionen zu niedrigen Preisen anbieten. Die ökologischen Folgen sind gravierend, denn die Herstellung verbraucht enorme Mengen an Wasser und Energie. Zudem werden viele Kleidungsstücke nur wenige Male getragen, bevor sie im Müll landen. Als Alternative gewinnen Secondhandläden und Tauschbörsen zunehmend an Beliebtheit. Kritiker bemängeln allerdings, dass individuelle Kaufentscheidungen allein das Problem nicht lösen können. Notwendig seien vielmehr verbindliche Vorgaben für die Industrie."},
+{id:"b2-9",level:"B2",title:"Schlaf und Gesundheit",text:"Ausreichender Schlaf gehört zu den wichtigsten Voraussetzungen für körperliche und geistige Gesundheit. Dennoch schlafen viele Erwachsene regelmäßig weniger als die empfohlenen sieben bis acht Stunden pro Nacht. Die Gründe dafür sind vielfältig, denn beruflicher Stress, unregelmäßige Arbeitszeiten und die abendliche Nutzung elektronischer Geräte beeinträchtigen die Schlafqualität erheblich. Studien belegen, dass chronischer Schlafmangel nicht nur die Konzentration verschlechtert, sondern auch das Risiko für Herzkrankheiten und Übergewicht erhöht. Experten raten daher, feste Schlafenszeiten einzuhalten und das Smartphone mindestens eine Stunde vor dem Zubettgehen beiseitezulegen. Wer diese Ratschläge befolgt, fühlt sich meist schon nach wenigen Wochen deutlich erholter."},
+{id:"b2-10",level:"B2",title:"Bürgerbeteiligung",text:"In zahlreichen Kommunen werden Bürgerinnen und Bürger inzwischen aktiv an politischen Entscheidungen beteiligt. Bei sogenannten Bürgerhaushalten können die Einwohner beispielsweise Vorschläge einreichen, wofür ein Teil des städtischen Budgets verwendet werden soll. Befürworter argumentieren, dass solche Verfahren das Vertrauen in die Demokratie stärken und die Qualität der Entscheidungen verbessern. Kritiker wenden hingegen ein, dass sich vor allem gut gebildete und ohnehin engagierte Gruppen beteiligen, während andere Teile der Bevölkerung kaum vertreten sind. Um dieses Ungleichgewicht zu verringern, setzen manche Städte auf zufällig ausgeloste Bürgerräte. Deren Empfehlungen sind zwar nicht bindend, werden aber zunehmend ernst genommen."}
+];
+
+/* =========================================================
+   CLASES DE LOS CASOS
+   Marcado en ejemplos: {nom:...} {akk:...} {dat:...} {gen:...}
+   ========================================================= */
+const TBL_DEF = `<div class="tablewrap"><table><tr><th></th><th>Masculino</th><th>Femenino</th><th>Neutro</th><th>Plural</th></tr>
+<tr><th>Nominativo</th><td>der</td><td>die</td><td>das</td><td>die</td></tr>
+<tr><th>Acusativo</th><td><b>den</b></td><td>die</td><td>das</td><td>die</td></tr>
+<tr><th>Dativo</th><td><b>dem</b></td><td><b>der</b></td><td><b>dem</b></td><td><b>den</b> (+n)</td></tr>
+<tr><th>Genitivo</th><td><b>des</b> (+s)</td><td><b>der</b></td><td><b>des</b> (+s)</td><td><b>der</b></td></tr></table></div>`;
+const TBL_EIN = `<div class="tablewrap"><table><tr><th></th><th>Masculino</th><th>Femenino</th><th>Neutro</th><th>Plural (kein, mein…)</th></tr>
+<tr><th>Nominativo</th><td>ein</td><td>eine</td><td>ein</td><td>keine</td></tr>
+<tr><th>Acusativo</th><td><b>einen</b></td><td>eine</td><td>ein</td><td>keine</td></tr>
+<tr><th>Dativo</th><td><b>einem</b></td><td><b>einer</b></td><td><b>einem</b></td><td><b>keinen</b> (+n)</td></tr>
+<tr><th>Genitivo</th><td><b>eines</b> (+s)</td><td><b>einer</b></td><td><b>eines</b> (+s)</td><td><b>keiner</b></td></tr></table></div>`;
+const TBL_PRON = `<div class="tablewrap"><table><tr><th>Nominativo</th><th>Acusativo</th><th>Dativo</th><th>Español</th></tr>
+<tr><td>ich</td><td>mich</td><td>mir</td><td>yo / me / a mí</td></tr>
+<tr><td>du</td><td>dich</td><td>dir</td><td>tú / te / a ti</td></tr>
+<tr><td>er</td><td>ihn</td><td>ihm</td><td>él / lo / le</td></tr>
+<tr><td>sie</td><td>sie</td><td>ihr</td><td>ella / la / le</td></tr>
+<tr><td>es</td><td>es</td><td>ihm</td><td>ello (neutro)</td></tr>
+<tr><td>wir</td><td>uns</td><td>uns</td><td>nosotros / nos</td></tr>
+<tr><td>ihr</td><td>euch</td><td>euch</td><td>ustedes (informal)</td></tr>
+<tr><td>sie</td><td>sie</td><td>ihnen</td><td>ellos / los / les</td></tr>
+<tr><td>Sie</td><td>Sie</td><td>Ihnen</td><td>usted / ustedes (formal)</td></tr></table></div>`;
+
+const LESSONS = [
+{id:"intro",drill:"casos",title:"¿Qué es un caso?",short:"La idea clave antes de empezar: por qué el alemán cambia los artículos.",
+body:`<h3>El problema para un hispanohablante</h3>
+<p>En español sabemos quién hace qué gracias al orden de las palabras y a pequeñas preposiciones: «Juan ve a María» no significa lo mismo que «María ve a Juan». En alemán, esa información va sobre todo en las <b>terminaciones</b> del artículo, del pronombre y del adjetivo. A cada función dentro de la frase le corresponde un <b>caso</b>.</p>
+<p>Por eso el alemán puede mover las palabras sin cambiar el significado. Estas dos frases dicen lo mismo, «el hombre ve al perro», porque <i>der</i> marca al sujeto y <i>den</i> al objeto:</p>
+<p class="demo">{nom:Der Mann} sieht {akk:den Hund}.<br>{akk:Den Hund} sieht {nom:der Mann}.</p>
+<h3>Los cuatro casos</h3>
+<div class="tablewrap"><table><tr><th>Caso</th><th>Función</th><th>Pregunta en alemán</th><th>En español</th></tr>
+<tr><td><span class="c-nom">Nominativo</span></td><td>sujeto</td><td>Wer? Was?</td><td>¿quién hace la acción?</td></tr>
+<tr><td><span class="c-akk">Acusativo</span></td><td>objeto directo</td><td>Wen? Was?</td><td>¿qué? ¿a quién? (lo / la)</td></tr>
+<tr><td><span class="c-dat">Dativo</span></td><td>objeto indirecto</td><td>Wem?</td><td>¿a quién? ¿para quién? (le / les)</td></tr>
+<tr><td><span class="c-gen">Genitivo</span></td><td>posesión</td><td>Wessen?</td><td>¿de quién?</td></tr></table></div>
+<h3>¿Qué palabras cambian?</h3>
+<p>Cambian sobre todo los artículos (der, den, dem, des), los pronombres (ich, mich, mir) y las terminaciones de los adjetivos. El sustantivo casi no cambia: solo añade <b>-n</b> en dativo plural (den Kinder<b>n</b>), <b>-s</b> o <b>-es</b> en genitivo masculino y neutro (des Mann<b>es</b>), y un grupo pequeño de masculinos añade <b>-n</b> en todos los casos menos el nominativo (der Student, den Student<b>en</b>).</p>
+<h3>Las tablas que tienes que saber de memoria</h3>
+<p>Artículo definido:</p>${TBL_DEF}
+<p>Artículo indefinido. <i>kein</i> (ningún) y los posesivos <i>mein, dein, sein, ihr, unser, euer</i> llevan exactamente las mismas terminaciones:</p>${TBL_EIN}
+<h3>Método en tres pasos</h3>
+<ol><li><b>Encuentra el verbo conjugado.</b> En una oración principal casi siempre está en la segunda posición.</li>
+<li><b>Busca el sujeto:</b> ¿quién hace la acción? Va en nominativo, y el verbo concuerda con él.</li>
+<li><b>Para cada otra parte, mira si hay preposición.</b> Si la hay, la preposición decide el caso. Si no la hay, pregunta <i>Wen? Was?</i> (acusativo) o <i>Wem?</i> (dativo). Si significa «de alguien», es genitivo.</li></ol>
+<h3>Por qué importa en el onSET</h3>
+<p>En cada texto del onSET hay varios huecos del tipo <i>d___</i>, <i>ein___</i> o <i>mein___</i>. La raíz ya la ves; lo que el examen mide es si sabes la terminación. Si dominas los casos, esos huecos se convierten en puntos casi seguros.</p>`,
+examples:[
+ ["{nom:Die Frau} gibt {dat:dem Kind} {akk:einen Apfel}.","La mujer le da una manzana al niño."],
+ ["{nom:Ich} helfe {dat:meiner Mutter}.","Ayudo a mi mamá."],
+ ["Das ist das Auto {gen:des Lehrers}.","Ese es el carro del profesor."],
+ ["{akk:Den Film} kenne {nom:ich} schon.","La película ya la conozco."],
+ ["{nom:Mein Bruder} wohnt bei {dat:einer Familie}.","Mi hermano vive con una familia."],
+ ["{nom:Wir} kaufen {akk:ein Geschenk} für {akk:den Vater}.","Compramos un regalo para el papá."]
+]},
+{id:"nom",drill:"nom",title:"Nominativo",short:"El sujeto: quien hace la acción. La forma del diccionario.",
+body:`<h3>Para qué sirve</h3>
+<p>El nominativo es el caso del <b>sujeto</b>: la persona o cosa que realiza la acción del verbo, o de la que se dice algo. Es la forma «de diccionario»: cuando aprendes <i>der Tisch</i> o <i>die Lampe</i>, estás aprendiendo el nominativo.</p>
+<p>La pregunta es <b>Wer?</b> (¿quién?) para personas y <b>Was?</b> (¿qué?) para cosas. <i>Wer arbeitet in der Bank? Mein Vater.</i> El sujeto es «mein Vater», en nominativo.</p>
+<h3>Formas</h3>
+<div class="tablewrap"><table><tr><th></th><th>Masculino</th><th>Femenino</th><th>Neutro</th><th>Plural</th></tr>
+<tr><th>Definido</th><td>der</td><td>die</td><td>das</td><td>die</td></tr>
+<tr><th>Indefinido</th><td>ein</td><td>eine</td><td>ein</td><td>(sin artículo)</td></tr>
+<tr><th>Negativo</th><td>kein</td><td>keine</td><td>kein</td><td>keine</td></tr>
+<tr><th>Posesivo</th><td>mein</td><td>meine</td><td>mein</td><td>meine</td></tr></table></div>
+<p>Fíjate en que <i>ein</i>, <i>kein</i> y <i>mein</i> no llevan terminación en masculino y neutro. Esto es muy importante para los adjetivos: cuando el artículo no muestra el género, el adjetivo lo muestra (<i>ein gut<b>er</b> Mann, ein gut<b>es</b> Buch</i>).</p>
+<p>Pronombres en nominativo: <i>ich, du, er, sie, es, wir, ihr, sie, Sie</i>. Recuerda que <i>ihr</i> es «ustedes» entre amigos o familia, y <i>Sie</i> (con mayúscula) es «usted» o «ustedes» formal.</p>
+<h3>Segundo uso: después de sein, werden, bleiben y heißen</h3>
+<p>Estos verbos no tienen objeto. Lo que viene después describe al sujeto y por eso también va en nominativo: <i>Das ist <b>ein</b> Hund</i> (no «einen»), <i>Er wird <b>ein</b> guter Arzt</i>, <i>Sie bleibt <b>meine</b> beste Freundin</i>.</p>
+<h3>Cuidado: el sujeto no siempre va primero</h3>
+<p>En alemán el verbo conjugado ocupa la segunda posición. Si la frase empieza con otra cosa (un tiempo, un lugar, un objeto), el sujeto pasa detrás del verbo: <i>Heute kauft <b>mein Bruder</b> ein Auto.</i> No te fíes de la posición: busca quién hace la acción. El verbo te ayuda, porque concuerda con el sujeto: <i>der Mann kommt</i> frente a <i>die Männer kommen</i>.</p>
+<h3>Errores típicos</h3>
+<p>El primero es poner acusativo después de <i>sein</i> («Das ist einen Tisch»). El segundo es creer que <i>der</i> siempre es nominativo: <i>der</i> también puede ser dativo o genitivo femenino. Decide por la función en la frase, no por la forma.</p>
+<h3>En el onSET</h3>
+<p>Si ves <i>Ei___ Frau arbeitet…</i> o <i>D___ Kinder spielen…</i>, pregúntate si esa palabra hace la acción del verbo. Si la respuesta es sí, es nominativo: <i>eine</i>, <i>die</i>.</p>`,
+examples:[
+ ["{nom:Der Zug} kommt um acht Uhr.","El tren llega a las ocho."],
+ ["{nom:Meine Schwester} studiert Medizin.","Mi hermana estudia medicina."],
+ ["Morgen besucht uns {nom:mein Opa}.","Mañana nos visita mi abuelo."],
+ ["Das ist {nom:ein gutes Buch}.","Es un buen libro."],
+ ["{nom:Die Kinder} spielen im Garten.","Los niños juegan en el jardín."],
+ ["Er wird {nom:ein guter Lehrer}.","Él va a ser un buen profesor."]
+]},
+{id:"akk",drill:"akk",title:"Acusativo",short:"El objeto directo, las preposiciones für, ohne, durch… y el movimiento.",
+body:`<h3>Para qué sirve</h3>
+<p>El acusativo marca el <b>objeto directo</b>: lo que recibe directamente la acción del verbo. Un truco: si en español puedes cambiarlo por «lo» o «la» (compro el libro → lo compro), casi siempre es acusativo.</p>
+<p>La pregunta es <b>Wen?</b> (¿a quién?) o <b>Was?</b> (¿qué?). <i>Wen besuchst du? Meinen Opa.</i></p>
+<h3>La buena noticia: solo cambia el masculino</h3>
+<div class="tablewrap"><table><tr><th></th><th>Masculino</th><th>Femenino</th><th>Neutro</th><th>Plural</th></tr>
+<tr><th>Nominativo</th><td>der / ein / mein</td><td>die / eine</td><td>das / ein</td><td>die / meine</td></tr>
+<tr><th>Acusativo</th><td><b>den / einen / meinen</b></td><td>die / eine</td><td>das / ein</td><td>die / meine</td></tr></table></div>
+<p>Femenino, neutro y plural son iguales al nominativo. Así que la pregunta clave en un hueco es: ¿el sustantivo es masculino? Si lo es y es objeto directo, la terminación es <b>-en</b>.</p>
+<p>Pronombres: <i>mich, dich, ihn, sie, es, uns, euch, sie, Sie</i>. El único masculino que cambia de forma es <i>er → ihn</i>.</p>
+<h3>La «a» personal del español no es dativo</h3>
+<p>En español decimos «veo <b>a</b> mi papá», con «a». Esa «a» engaña: en alemán es un objeto directo normal, en acusativo: <i>Ich sehe <b>meinen</b> Vater.</i> Lo mismo con <i>besuchen, kennen, lieben, fragen, anrufen</i>.</p>
+<h3>Verbos frecuentes con acusativo</h3>
+<p><i>haben, brauchen, kaufen, suchen, finden, sehen, kennen, besuchen, lieben, fragen, essen, trinken, nehmen, bekommen, lesen, schreiben, anrufen</i>. Y la expresión <b>es gibt</b> (hay): <i>Hier gibt es <b>einen</b> Park.</i></p>
+<h3>Preposiciones que siempre rigen acusativo</h3>
+<p><b>durch</b> (por, a través de), <b>für</b> (para), <b>gegen</b> (contra), <b>ohne</b> (sin), <b>um</b> (alrededor de, a las). También <i>bis</i> y <i>entlang</i>. <i>Das Geschenk ist für <b>den</b> Lehrer. Ohne <b>meinen</b> Schlüssel komme ich nicht rein.</i></p>
+<h3>Preposiciones de doble caso con movimiento (Wohin?)</h3>
+<p><i>in, an, auf, über, unter, vor, hinter, neben, zwischen</i> rigen acusativo cuando hay un cambio de lugar, una dirección: <i>Ich gehe in <b>die</b> Stadt. Ich lege das Buch auf <b>den</b> Tisch.</i> Si no hay movimiento (¿dónde está?), van con dativo; lo verás en la clase siguiente.</p>
+<h3>Tiempo sin preposición</h3>
+<p>Las expresiones de tiempo sin preposición van en acusativo: <i>jed<b>en</b> Tag, nächst<b>en</b> Monat, letzt<b>e</b> Woche, d<b>en</b> ganzen Abend.</i></p>
+<h3>Masculinos débiles</h3>
+<p>Algunos masculinos, sobre todo personas terminadas en <i>-e</i> o de origen extranjero, añaden <b>-n</b> también al sustantivo: <i>den Student<b>en</b>, den Kolleg<b>en</b>, den Mensch<b>en</b>, den Nachbar<b>n</b>, den Herr<b>n</b></i>.</p>
+<h3>En el onSET</h3>
+<p>Los huecos más frecuentes son <i>d<b>en</b></i> y <i>ein<b>en</b></i>. Si el sustantivo es masculino, no es el sujeto y no va con una preposición de dativo, piensa en <b>-en</b>.</p>`,
+examples:[
+ ["Ich brauche {akk:einen neuen Computer}.","Necesito un computador nuevo."],
+ ["Kennst du {akk:meinen Bruder}?","¿Conoces a mi hermano?"],
+ ["Wir gehen durch {akk:den Park}.","Caminamos por el parque."],
+ ["Es gibt {akk:keinen Zucker} mehr.","Ya no hay azúcar."],
+ ["Ich lege die Tasche auf {akk:den Stuhl}.","Pongo el bolso sobre la silla."],
+ ["{akk:Jeden Morgen} trinke ich Kaffee.","Todas las mañanas tomo café."],
+ ["Ich rufe {akk:dich} später an.","Te llamo más tarde."]
+]},
+{id:"dat",drill:"dat",title:"Dativo",short:"El objeto indirecto, helfen y gefallen, y aus-bei-mit-nach-seit-von-zu.",
+body:`<h3>Para qué sirve</h3>
+<p>El dativo marca el <b>objeto indirecto</b>: casi siempre una persona que recibe algo, a la que se le hace algo o que se beneficia. En español corresponde a «le» o «les»: <i>Le doy el libro a mi mamá → Ich gebe <b>meiner</b> Mutter das Buch.</i></p>
+<p>La pregunta es <b>Wem?</b> (¿a quién?).</p>
+<h3>Formas</h3>
+<div class="tablewrap"><table><tr><th></th><th>Masculino</th><th>Femenino</th><th>Neutro</th><th>Plural</th></tr>
+<tr><th>Definido</th><td>dem</td><td>der</td><td>dem</td><td>den (+n)</td></tr>
+<tr><th>Indefinido</th><td>einem</td><td>einer</td><td>einem</td><td>(sin artículo)</td></tr>
+<tr><th>Negativo</th><td>keinem</td><td>keiner</td><td>keinem</td><td>keinen</td></tr>
+<tr><th>Posesivo</th><td>meinem</td><td>meiner</td><td>meinem</td><td>meinen</td></tr></table></div>
+<p>Truco: en dativo, masculino y neutro terminan en <b>-m</b>, el femenino en <b>-r</b> y el plural en <b>-n</b>.</p>
+${TBL_PRON}
+<h3>El plural añade -n al sustantivo</h3>
+<p><i>mit den Kinder<b>n</b>, mit meinen Freunde<b>n</b></i>. La excepción son los plurales que ya terminan en <i>-n</i> o en <i>-s</i>: <i>mit den Frauen, mit den Autos</i>.</p>
+<h3>Verbos con dos objetos</h3>
+<p><i>geben, schenken, zeigen, erklären, schicken, bringen, empfehlen</i>: la persona va en dativo y la cosa en acusativo. <i>Ich schenke <b>dem Kind</b> einen Ball.</i> Si los dos son sustantivos, primero va el dativo; si la cosa es un pronombre, el pronombre va primero: <i>Ich schenke ihn dem Kind.</i></p>
+<h3>Verbos que siempre rigen dativo: la gran trampa</h3>
+<p><i>helfen, danken, gefallen, gehören, antworten, gratulieren, schmecken, passen, folgen, glauben</i> (creerle a alguien), <i>fehlen, zuhören</i>. En español varios son directos («ayudo a Juan» → «lo ayudo»), pero en alemán van con dativo: <i>Ich helfe <b>ihm</b>. Das Kleid gefällt <b>mir</b>.</i></p>
+<h3>Preposiciones que siempre rigen dativo</h3>
+<p><b>aus, bei, mit, nach, seit, von, zu</b> (y <i>gegenüber</i>). Memorízalas como una sola palabra: «aus-bei-mit-nach-seit-von-zu». Contracciones que verás en todos los textos: zu dem → <b>zum</b>, zu der → <b>zur</b>, bei dem → <b>beim</b>, von dem → <b>vom</b>, in dem → <b>im</b>, an dem → <b>am</b>.</p>
+<h3>Preposiciones de doble caso sin movimiento (Wo?)</h3>
+<p>Las mismas nueve preposiciones del acusativo (<i>in, an, auf, über, unter, vor, hinter, neben, zwischen</i>) rigen dativo cuando indican dónde está algo:</p>
+<div class="tablewrap"><table><tr><th>Wo? (dónde) → dativo</th><th>Wohin? (a dónde) → acusativo</th></tr>
+<tr><td>Ich bin in <b>der</b> Stadt.</td><td>Ich fahre in <b>die</b> Stadt.</td></tr>
+<tr><td>Das Buch liegt auf <b>dem</b> Tisch.</td><td>Ich lege das Buch auf <b>den</b> Tisch.</td></tr>
+<tr><td>Das Bild hängt an <b>der</b> Wand.</td><td>Ich hänge das Bild an <b>die</b> Wand.</td></tr></table></div>
+<h3>Expresiones fijas</h3>
+<p><i>Wie geht es <b>dir</b>? <b>Mir</b> ist kalt. Es tut <b>mir</b> leid. Das ist <b>mir</b> egal.</i></p>
+<h3>En el onSET</h3>
+<p>Cuando veas una preposición de la lista aus-bei-mit-nach-seit-von-zu, el hueco siguiente casi seguro termina en <b>-em</b>, <b>-er</b> o <b>-en</b>. En los textos B1 y B2 aparecen muchísimo <i>mit d<b>em</b>, bei d<b>er</b>, von d<b>en</b></i>.</p>`,
+examples:[
+ ["Ich helfe {dat:meiner Nachbarin}.","Ayudo a mi vecina."],
+ ["Er schenkt {dat:seiner Freundin} Blumen.","Le regala flores a su novia."],
+ ["Wir fahren mit {dat:dem Bus} zur Uni.","Vamos en bus a la universidad."],
+ ["Seit {dat:einem Jahr} lerne ich Deutsch.","Hace un año que estudio alemán."],
+ ["Das Handy liegt auf {dat:dem Tisch}.","El celular está sobre la mesa."],
+ ["Die Suppe schmeckt {dat:den Kindern}.","A los niños les gusta la sopa."],
+ ["Wie geht es {dat:Ihnen}?","¿Cómo está usted?"]
+]},
+{id:"gen",drill:"gen",title:"Genitivo",short:"La posesión, wegen, trotz, während… y la trampa del «der».",
+body:`<h3>Para qué sirve</h3>
+<p>El genitivo expresa <b>posesión o pertenencia</b>, como «de» en español: <i>el carro del profesor → das Auto <b>des Lehrers</b></i>. La pregunta es <b>Wessen?</b> (¿de quién?).</p>
+<h3>Formas</h3>
+<div class="tablewrap"><table><tr><th></th><th>Masculino</th><th>Femenino</th><th>Neutro</th><th>Plural</th></tr>
+<tr><th>Definido</th><td>des (+s)</td><td>der</td><td>des (+s)</td><td>der</td></tr>
+<tr><th>Indefinido</th><td>eines (+s)</td><td>einer</td><td>eines (+s)</td><td>(sin artículo)</td></tr>
+<tr><th>Negativo</th><td>keines (+s)</td><td>keiner</td><td>keines (+s)</td><td>keiner</td></tr>
+<tr><th>Posesivo</th><td>meines (+s)</td><td>meiner</td><td>meines (+s)</td><td>meiner</td></tr></table></div>
+<h3>El sustantivo masculino y neutro añade -s o -es</h3>
+<p>Las palabras de una sílaba suelen llevar <b>-es</b>: <i>des Mann<b>es</b>, des Tag<b>es</b>, des Buch<b>es</b></i>. Las más largas llevan <b>-s</b>: <i>des Lehrer<b>s</b>, des Computer<b>s</b>, des Mädchen<b>s</b></i>. El femenino y el plural no cambian: <i>der Frau, der Kinder</i>.</p>
+<h3>Con nombres propios</h3>
+<p>Con nombres de personas, el genitivo va delante y lleva <b>-s</b> sin apóstrofo: <i>Annas Buch, Peters Wohnung</i>. Con artículo va detrás, igual que en español: <i>das Buch der Lehrerin</i>.</p>
+<h3>Preposiciones con genitivo</h3>
+<p><b>wegen</b> (por, a causa de), <b>trotz</b> (a pesar de), <b>während</b> (durante), <b>statt / anstatt</b> (en lugar de), <b>innerhalb</b> (dentro de), <b>außerhalb</b> (fuera de). <i>Wegen <b>des</b> Regens bleiben wir zu Hause. Während <b>der</b> Prüfung ist es still.</i></p>
+<h3>¿Se usa de verdad?</h3>
+<p>En la conversación, muchos alemanes lo cambian por <i>von</i> + dativo: <i>das Auto von meinem Bruder</i>. Pero en los textos escritos, que son justo lo que trae el onSET, el genitivo es muy frecuente, sobre todo en B1 y B2: <i>die Hälfte der Weltbevölkerung, während des Studiums, die Entwicklung dieser Technologie</i>.</p>
+<h3>La trampa del «der»</h3>
+<p><i>der</i> puede ser nominativo masculino, dativo femenino o genitivo femenino y plural. Si <i>der</i> aparece justo después de otro sustantivo y se traduce como «de la» o «de los», es genitivo: <i>die Meinung <b>der</b> Studenten</i> (la opinión de los estudiantes).</p>
+<h3>En el onSET</h3>
+<p>Cuando veas un sustantivo, luego <i>d___</i> y después otro sustantivo terminado en <i>-s</i> o <i>-es</i>, el hueco casi seguro es <b>des</b>: <i>das Ende d<b>es</b> Film<b>s</b></i>.</p>`,
+examples:[
+ ["Das ist das Fahrrad {gen:meines Bruders}.","Esa es la bicicleta de mi hermano."],
+ ["Die Farbe {gen:des Autos} gefällt mir.","Me gusta el color del carro."],
+ ["Wegen {gen:des Streiks} fährt heute kein Zug.","Por la huelga hoy no hay trenes."],
+ ["Trotz {gen:der Kälte} gehen wir spazieren.","A pesar del frío salimos a caminar."],
+ ["Während {gen:des Unterrichts} ist das Handy aus.","Durante la clase el celular está apagado."],
+ ["Die Meinung {gen:der Studenten} ist wichtig.","La opinión de los estudiantes es importante."],
+ ["{gen:Marias} Wohnung ist sehr hell.","El apartamento de María es muy iluminado."]
+]}
+];
+const caseMark = s => esc(s).replace(/\{(nom|akk|dat|gen):([^}]+)\}/g,'<span class="c-$1">$2</span>');
+const caseMarkHtml = s => s.replace(/\{(nom|akk|dat|gen):([^}]+)\}/g,'<span class="c-$1">$2</span>');
+
+/* =========================================================
+   GENERADORES ALEATORIOS DE EJERCICIOS
+   Cada ronda se crea al azar: nunca sale la misma lista.
+   ========================================================= */
+const rnd = a => a[Math.floor(Math.random()*a.length)];
+const cap = s => s ? s[0].toUpperCase()+s.slice(1) : s;
+const sent = r => cap(r)+(/[?.!]$/.test(r)?"":".");
+const cSplit = w => { const k=Math.floor(w.length/2); return {prefix:w.slice(0,k),ans:w.slice(k)}; };
+const CASE_ES = {nom:"Nominativo",akk:"Acusativo",dat:"Dativo",gen:"Genitivo"};
+const G_ES = {m:"masculino",f:"femenino",n:"neutro",p:"plural"};
+const DEF = {nom:{m:"der",f:"die",n:"das",p:"die"},akk:{m:"den",f:"die",n:"das",p:"die"},dat:{m:"dem",f:"der",n:"dem",p:"den"},gen:{m:"des",f:"der",n:"des",p:"der"}};
+const EIN_END = {nom:{m:"",f:"e",n:"",p:"e"},akk:{m:"en",f:"e",n:"",p:"e"},dat:{m:"em",f:"er",n:"em",p:"en"},gen:{m:"es",f:"er",n:"es",p:"er"}};
+const STEM = {def:"d",ein:"ein",kein:"kein",mein:"mein",dein:"dein",sein:"sein",unser:"unser"};
+const detForm = (t,c,g) => t==="def" ? DEF[c][g] : STEM[t]+EIN_END[c][g];
+const WEAK = {nom:{m:"e",f:"e",n:"e",p:"en"},akk:{m:"en",f:"e",n:"e",p:"en"},dat:{m:"en",f:"en",n:"en",p:"en"},gen:{m:"en",f:"en",n:"en",p:"en"}};
+const STRONG = {nom:{m:"er",f:"e",n:"es",p:"e"},akk:{m:"en",f:"e",n:"es",p:"e"},dat:{m:"em",f:"er",n:"em",p:"en"},gen:{m:"en",f:"er",n:"en",p:"er"}};
+function adjEnd(t,c,g){ if(t==="def") return WEAK[c][g]; if(t==="none") return STRONG[c][g]; if(g==="p") return "en"; return EIN_END[c][g]==="" ? STRONG[c][g] : WEAK[c][g]; }
+
+// [género, singular, genitivo (m/n), dativo plural]
+const NS = {
+ pers:[["m","Mann","Mannes"],["m","Lehrer","Lehrers"],["m","Freund","Freundes"],["m","Vater","Vaters"],["m","Bruder","Bruders"],["m","Arzt","Arztes"],["f","Frau"],["f","Lehrerin"],["f","Mutter"],["f","Schwester"],["f","Ärztin"],["f","Freundin"],["f","Nachbarin"],["m","Chef","Chefs"],["f","Chefin"],["m","Onkel","Onkels"],["f","Tante"],["f","Oma"],["m","Opa","Opas"],["n","Kind","Kindes"],["n","Mädchen","Mädchens"],["p","Kinder",null,"Kindern"],["p","Eltern",null,"Eltern"],["p","Freunde",null,"Freunden"],["p","Lehrer",null,"Lehrern"],["p","Kollegen",null,"Kollegen"],["p","Nachbarn",null,"Nachbarn"]],
+ obj:[["m","Tisch","Tisches"],["m","Computer","Computers"],["m","Schlüssel","Schlüssels"],["m","Kuchen","Kuchens"],["m","Ball","Balls"],["m","Mantel","Mantels"],["f","Tasche"],["f","Lampe"],["f","Uhr"],["f","Zeitung"],["f","Jacke"],["f","Brille"],["f","Kamera"],["m","Rucksack","Rucksacks"],["m","Pass","Passes"],["n","Heft","Heftes"],["n","Ticket","Tickets"],["n","Buch","Buches"],["n","Handy","Handys"],["n","Fahrrad","Fahrrads"],["n","Auto","Autos"],["n","Geschenk","Geschenks"],["p","Bücher",null,"Büchern"],["p","Taschen",null,"Taschen"],["p","Schlüssel",null,"Schlüsseln"],["p","Autos",null,"Autos"],["p","Fotos",null,"Fotos"]],
+ surf:[["m","Tisch"],["m","Stuhl"],["n","Sofa"],["n","Regal"],["n","Bett"],["f","Kommode"],["m","Schrank"],["f","Bank"]],
+ place:[["m","Park"],["m","Supermarkt"],["m","Garten"],["f","Bibliothek"],["f","Buchhandlung"],["f","Bäckerei"],["n","Kino"],["n","Restaurant"],["n","Café"]],
+ event:[["m","Regen","Regens"],["m","Streik","Streiks"],["n","Gewitter","Gewitters"],["f","Prüfung"],["f","Krankheit"],["f","Hitze"]]
+};
+const ADJ = {pers:["nett","jung","alt","neu","freundlich"],obj:["neu","alt","klein","groß","schön","rot","billig","praktisch"],surf:["alt","neu","klein","groß"],place:["klein","groß","neu","schön"],event:["lang"]};
+function nounForm(n,c){ const [g,s,gen,datp]=n; if(c==="dat"&&g==="p") return datp||s; if(c==="gen"&&(g==="m"||g==="n")) return gen||s+"s"; return s; }
+
+const TPL = [
+ {c:"nom",set:"pers",t:"{NP} {arbeitet|arbeiten} heute im Büro.",r:"es el sujeto: quien trabaja"},
+ {c:"nom",set:"pers",t:"Heute {kommt|kommen} {NP} zu Besuch.",r:"es el sujeto, aunque va detrás del verbo"},
+ {c:"nom",set:"pers",t:"{NP} {wohnt|wohnen} in Köln.",r:"es el sujeto de «wohnen»"},
+ {c:"nom",set:"pers",t:"Am Wochenende {kocht|kochen} {NP}.",r:"es el sujeto: quien cocina (va después del verbo)"},
+ {c:"nom",set:"obj",t:"{NP} {liegt|liegen} auf dem Boden.",r:"es el sujeto: la cosa que está en el suelo"},
+ {c:"nom",set:"obj",t:"{NP} {war|waren} sehr teuer.",r:"es el sujeto de la frase"},
+ {c:"nom",set:"obj",t:"Das {ist|sind} {NP}.",r:"después de «sein» va nominativo, no acusativo"},
+ {c:"nom",set:"obj",t:"Wo {ist|sind} {NP}?",r:"es el sujeto de la pregunta"},
+ {c:"akk",set:"obj",t:"Ich kaufe morgen {NP}.",r:"objeto directo de «kaufen» (¿qué compro?)"},
+ {c:"akk",set:"obj",t:"Wir suchen {NP}.",r:"objeto directo de «suchen»"},
+ {c:"akk",set:"obj",t:"Hast du {NP} gesehen?",r:"objeto directo de «sehen»"},
+ {c:"akk",set:"obj",t:"Hier gibt es {NP}.",r:"después de «es gibt» siempre va acusativo",d:["ein","kein"]},
+ {c:"akk",set:"obj",t:"Ohne {NP} gehe ich nicht aus dem Haus.",r:"«ohne» siempre rige acusativo"},
+ {c:"akk",set:"pers",t:"Wir besuchen am Sonntag {NP}.",r:"objeto directo de «besuchen» (¿a quién?)"},
+ {c:"akk",set:"pers",t:"Kennst du {NP}?",r:"objeto directo de «kennen»; la «a» del español no es dativo"},
+ {c:"akk",set:"pers",t:"Das Geschenk ist für {NP}.",r:"«für» siempre rige acusativo"},
+ {c:"akk",set:"pers",t:"Ich frage {NP} nach dem Weg.",r:"«fragen» rige acusativo (preguntarle a alguien)"},
+ {c:"akk",set:"place",t:"Am Abend gehen wir in {NP}.",r:"«in» con movimiento (¿a dónde?) rige acusativo",d:["ein"]},
+ {c:"akk",set:"surf",t:"Ich lege die Tasche auf {NP}.",r:"«auf» con movimiento (¿a dónde la pongo?) rige acusativo",d:["def","ein"]},
+ {c:"dat",set:"pers",t:"Ich helfe {NP} beim Umzug.",r:"«helfen» siempre rige dativo"},
+ {c:"dat",set:"pers",t:"Das Fahrrad gehört {NP}.",r:"«gehören» siempre rige dativo"},
+ {c:"dat",set:"pers",t:"Wir danken {NP} für die Hilfe.",r:"«danken» siempre rige dativo"},
+ {c:"dat",set:"pers",t:"Sie schenkt {NP} ein Buch.",r:"la persona que recibe algo es el objeto indirecto"},
+ {c:"dat",set:"pers",t:"Ich spreche oft mit {NP}.",r:"«mit» siempre rige dativo"},
+ {c:"dat",set:"pers",t:"Er wohnt jetzt bei {NP}.",r:"«bei» siempre rige dativo"},
+ {c:"dat",set:"pers",t:"Der Brief ist von {NP}.",r:"«von» siempre rige dativo"},
+ {c:"dat",set:"pers",t:"Der Film gefällt {NP} sehr.",r:"«gefallen» rige dativo (¿a quién le gusta?)"},
+ {c:"dat",set:"obj",t:"Was machst du mit {NP}?",r:"«mit» siempre rige dativo"},
+ {c:"dat",set:"place",t:"Wir treffen uns in {NP}.",r:"«in» sin movimiento (¿dónde?) rige dativo",d:["ein"]},
+ {c:"dat",set:"surf",t:"Das Handy liegt auf {NP}.",r:"«auf» sin movimiento (¿dónde está?) rige dativo",d:["def","ein"]},
+ {c:"gen",set:"pers",t:"Das ist das Auto {NP}.",r:"posesión: ¿de quién es el carro?"},
+ {c:"gen",set:"pers",t:"Die Wohnung {NP} ist sehr hell.",r:"posesión: ¿de quién es el apartamento?"},
+ {c:"gen",set:"pers",t:"Der Name {NP} ist schwer.",r:"pertenencia: el nombre de alguien"},
+ {c:"gen",set:"obj",t:"Die Farbe {NP} gefällt mir.",r:"pertenencia: el color de algo"},
+ {c:"gen",set:"obj",t:"Der Preis {NP} ist zu hoch.",r:"pertenencia: el precio de algo"},
+ {c:"gen",set:"event",t:"Wegen {NP} bleiben wir zu Hause.",r:"«wegen» rige genitivo",d:["def"]},
+ {c:"gen",set:"event",t:"Trotz {NP} sind wir zufrieden.",r:"«trotz» rige genitivo",d:["def"]},
+ {c:"gen",set:"event",t:"Während {NP} war ich sehr nervös.",r:"«während» rige genitivo",d:["def"]},
+ {c:"nom",set:"pers",t:"{NP} {hat|haben} heute Geburtstag.",r:"es el sujeto: quien cumple años"},
+ {c:"nom",set:"pers",t:"Gestern {war|waren} {NP} krank.",r:"es el sujeto, aunque va detrás del verbo"},
+ {c:"nom",set:"pers",t:"Wann {kommt|kommen} {NP} nach Hause?",r:"es el sujeto de la pregunta"},
+ {c:"nom",set:"obj",t:"{NP} {ist|sind} leider kaputt.",r:"es el sujeto de la frase"},
+ {c:"nom",set:"obj",t:"Hier {fehlt|fehlen} {NP}.",r:"es el sujeto: lo que falta"},
+ {c:"nom",set:"place",t:"{NP} {ist|sind} heute geschlossen.",r:"es el sujeto de la frase"},
+ {c:"akk",set:"obj",t:"Ich brauche dringend {NP}.",r:"objeto directo de «brauchen»"},
+ {c:"akk",set:"obj",t:"Kannst du mir {NP} geben?",r:"la cosa que se da es el objeto directo"},
+ {c:"akk",set:"obj",t:"Er hat {NP} verloren.",r:"objeto directo de «verlieren»"},
+ {c:"akk",set:"obj",t:"Für {NP} habe ich viel bezahlt.",r:"«für» siempre rige acusativo"},
+ {c:"akk",set:"pers",t:"Ich liebe {NP}.",r:"objeto directo de «lieben»"},
+ {c:"akk",set:"pers",t:"Wir warten auf {NP}.",r:"«warten auf» lleva acusativo"},
+ {c:"akk",set:"pers",t:"Sie ruft {NP} jeden Tag an.",r:"objeto directo de «anrufen»"},
+ {c:"akk",set:"pers",t:"Ohne {NP} fahre ich nicht in den Urlaub.",r:"«ohne» siempre rige acusativo"},
+ {c:"akk",set:"surf",t:"Die Katze springt auf {NP}.",r:"«auf» con movimiento (¿a dónde salta?) rige acusativo",d:["def","ein"]},
+ {c:"dat",set:"pers",t:"Ich gebe {NP} meine Telefonnummer.",r:"la persona que recibe algo es el objeto indirecto"},
+ {c:"dat",set:"pers",t:"Er antwortet {NP} nicht.",r:"«antworten» rige dativo"},
+ {c:"dat",set:"pers",t:"Ich gratuliere {NP} zum Geburtstag.",r:"«gratulieren» rige dativo"},
+ {c:"dat",set:"pers",t:"Wir zeigen {NP} die Stadt.",r:"la persona a la que se muestra algo va en dativo"},
+ {c:"dat",set:"pers",t:"Nach dem Kurs gehe ich mit {NP} essen.",r:"«mit» siempre rige dativo"},
+ {c:"dat",set:"place",t:"Ich komme gerade aus {NP}.",r:"«aus» siempre rige dativo",d:["def","ein"]},
+ {c:"dat",set:"surf",t:"Die Katze schläft unter {NP}.",r:"«unter» sin movimiento (¿dónde?) rige dativo",d:["def","ein"]},
+ {c:"dat",set:"obj",t:"Was ist mit {NP} passiert?",r:"«mit» siempre rige dativo"},
+ {c:"gen",set:"pers",t:"Das Zimmer {NP} ist sehr groß.",r:"posesión: ¿de quién es la habitación?"},
+ {c:"gen",set:"pers",t:"Ich kenne die Adresse {NP} nicht.",r:"pertenencia: la dirección de alguien"},
+ {c:"gen",set:"obj",t:"Die Qualität {NP} ist sehr gut.",r:"pertenencia: la calidad de algo"},
+ {c:"gen",set:"event",t:"Nach dem Ende {NP} fahren wir los.",r:"pertenencia: el final de algo",d:["def"]}
+];
+const PRON = [{k:"ich",akk:"mich",dat:"mir",es:"a mí"},{k:"du",akk:"dich",dat:"dir",es:"a ti"},{k:"er",akk:"ihn",dat:"ihm",es:"a él"},{k:"sie",akk:"sie",dat:"ihr",es:"a ella"},{k:"wir",akk:"uns",dat:"uns",es:"a nosotros"},{k:"ihr",akk:"euch",dat:"euch",es:"a ustedes, informal"},{k:"sie3",akk:"sie",dat:"ihnen",es:"a ellos"},{k:"Sie",akk:"Sie",dat:"Ihnen",es:"a usted, formal"}];
+const PTPL = [
+ {c:"akk",t:"Ich besuche {PR} morgen.",x:["ich"],r:"objeto directo de «besuchen»"},
+ {c:"akk",t:"Wir rufen {PR} heute Abend an.",x:["wir"],r:"objeto directo de «anrufen» (llamar a alguien)"},
+ {c:"akk",t:"Das Geschenk ist für {PR}.",x:[],r:"«für» rige acusativo"},
+ {c:"akk",t:"Kennst du {PR} schon?",x:["du"],r:"objeto directo de «kennen»"},
+ {c:"dat",t:"Kannst du {PR} helfen?",x:["du"],r:"«helfen» rige dativo"},
+ {c:"dat",t:"Ich schenke {PR} ein Buch.",x:["ich"],r:"quien recibe el regalo va en dativo"},
+ {c:"dat",t:"Das Essen schmeckt {PR} nicht.",x:[],r:"«schmecken» rige dativo"},
+ {c:"dat",t:"Wir fahren mit {PR} ans Meer.",x:["wir"],r:"«mit» rige dativo"},
+ {c:"dat",t:"Wie geht es {PR}?",x:["ich"],r:"expresión fija con dativo"},
+ {c:"akk",t:"Ich vermisse {PR} sehr.",x:["ich"],r:"objeto directo de «vermissen»"},
+ {c:"akk",t:"Wir laden {PR} zur Party ein.",x:["wir"],r:"objeto directo de «einladen»"},
+ {c:"akk",t:"Siehst du {PR} dort?",x:["du"],r:"objeto directo de «sehen»"},
+ {c:"akk",t:"Ohne {PR} fahre ich nicht.",x:["ich"],r:"«ohne» rige acusativo"},
+ {c:"akk",t:"Der Lehrer fragt {PR} etwas.",x:[],r:"«fragen» rige acusativo"},
+ {c:"akk",t:"Ich warte auf {PR}.",x:["ich"],r:"«warten auf» lleva acusativo"},
+ {c:"akk",t:"Kannst du {PR} vom Bahnhof abholen?",x:["du"],r:"objeto directo de «abholen»"},
+ {c:"akk",t:"Die Ärztin untersucht {PR}.",x:[],r:"objeto directo de «untersuchen»"},
+ {c:"dat",t:"Ich danke {PR} für alles.",x:["ich"],r:"«danken» rige dativo"},
+ {c:"dat",t:"Gehört das Fahrrad {PR}?",x:[],r:"«gehören» rige dativo"},
+ {c:"dat",t:"Der Film gefällt {PR} nicht.",x:[],r:"«gefallen» rige dativo"},
+ {c:"dat",t:"Ich zeige {PR} die Stadt.",x:["ich"],r:"la persona a la que se muestra algo va en dativo"},
+ {c:"dat",t:"Kannst du {PR} das erklären?",x:["du"],r:"la persona a la que se explica algo va en dativo"},
+ {c:"dat",t:"Ich wohne bei {PR}.",x:["ich"],r:"«bei» rige dativo"},
+ {c:"dat",t:"Wir gratulieren {PR} zum Geburtstag.",x:["wir"],r:"«gratulieren» rige dativo"},
+ {c:"dat",t:"Ich glaube {PR} nicht.",x:["ich"],r:"«glauben» (a alguien) rige dativo"},
+ {c:"dat",t:"Das Paket ist von {PR}.",x:[],r:"«von» rige dativo"},
+ {c:"dat",t:"Seit Montag arbeitet er mit {PR}.",x:[],r:"«mit» rige dativo"}
+];
+const agree = (t,g) => t.replace(/\{([^|{}]+)\|([^}]+)\}/g,(_,a,b)=>g==="p"?b:a);
+
+function npItem(c, adj, allowEmpty){
+  for(let tries=0; tries<80; tries++){
+    const tp = rnd(TPL.filter(x=>x.c===c));
+    const n = rnd(NS[tp.set]); const g = n[0];
+    let dets = tp.d || (tp.set==="pers" ? ["def","def","ein","mein","dein","sein","unser"] : ["def","def","ein","kein","mein","unser"]);
+    if(adj && g==="p" && !tp.d) dets = dets.concat(["none","none"]);
+    const dt = rnd(dets);
+    if(g==="p" && dt==="ein") continue;
+    if(!adj && !allowEmpty && dt!=="def" && EIN_END[c][g]==="") continue;
+    const det = dt==="none" ? "" : detForm(dt,c,g);
+    const noun = nounForm(n,c);
+    const start = tp.t.startsWith("{NP}");
+    const [pre, post] = agree(tp.t,g).split("{NP}");
+    if(adj){
+      const a = rnd(ADJ[tp.set]), e = adjEnd(dt,c,g);
+      const d = det && start ? cap(det) : det, ad = !det && start ? cap(a) : a;
+      let expl;
+      if(dt==="def") expl = `Tras artículo definido («${det}»): ${e==="e"?"forma básica, termina en -e":"el artículo ya muestra el caso, así que termina en -en"}.`;
+      else if(dt==="none") expl = `Sin artículo, el adjetivo toma la terminación del artículo definido (${DEF[c][g]}) → -${e}.`;
+      else if(e==="er"||e==="es") expl = `«${det}» no muestra el género ${G_ES[g]}, así que lo muestra el adjetivo → -${e}.`;
+      else expl = `Tras «${det}» (${CASE_ES[c].toLowerCase()}, ${G_ES[g]}) → -${e}.`;
+      return {type:"gap",before:pre+(d?d+" ":""),prefix:ad,ans:e,post:" "+noun+post,expl,c};
+    }
+    const stem = STEM[dt], shown = start ? cap(stem) : stem;
+    return {type:"gap",before:pre,prefix:shown,ans:det.slice(stem.length),post:" "+noun+post,
+      expl:`${CASE_ES[c]}. ${sent(tp.r)} ${cap(G_ES[g])} → ${det}.`,c,r:tp.r,
+      mcPre:pre,mcNP:(start?cap(det):det)+" "+noun,mcPost:post,detRaw:det,dt,start};
+  }
+  return null;
+}
+function pronItem(c){
+  const tp = rnd(PTPL.filter(x=>x.c===c)); const p = rnd(PRON.filter(x=>!tp.x.includes(x.k)));
+  const form = p[c], [pre,post] = tp.t.split("{PR}"), sp = cSplit(form);
+  return {type:"gap",before:pre,prefix:sp.prefix,ans:sp.ans,post,hint:p.es,expl:`${CASE_ES[c]}. ${sent(tp.r)} «${p.es}» → ${form}.`,c,r:tp.r,mcPre:pre,mcNP:form,mcPost:post};
+}
+function caseItem(c){ return (PTPL.some(x=>x.c===c) && Math.random()<0.3) ? pronItem(c) : npItem(c,false); }
+function mcItem(){
+  const c = rnd(["nom","akk","dat","gen"]); const it = caseItem(c); if(!it) return null;
+  return {type:"mc",pre:it.mcPre,np:it.mcNP,post:it.mcPost,options:shuffle(["nom","akk","dat","gen"]),ans:c,expl:`${CASE_ES[c]}. ${sent(it.r)}`};
+}
+
+const VERBS = [
+ {i:"machen",f:["mache","machst","macht","machen","macht","machen"],c:"viel Sport"},
+ {i:"arbeiten",f:["arbeite","arbeitest","arbeitet","arbeiten","arbeitet","arbeiten"],c:"in einem Café",n:"la raíz termina en -t, por eso se añade -e- (arbeitest, arbeitet)"},
+ {i:"wohnen",f:["wohne","wohnst","wohnt","wohnen","wohnt","wohnen"],c:"in Hamburg"},
+ {i:"lernen",f:["lerne","lernst","lernt","lernen","lernt","lernen"],c:"fleißig Deutsch"},
+ {i:"spielen",f:["spiele","spielst","spielt","spielen","spielt","spielen"],c:"Fußball im Park"},
+ {i:"fahren",f:["fahre","fährst","fährt","fahren","fahrt","fahren"],c:"mit dem Bus zur Uni",n:"a → ä con du y er/sie/es"},
+ {i:"sprechen",f:["spreche","sprichst","spricht","sprechen","sprecht","sprechen"],c:"sehr gut Deutsch",n:"e → i con du y er/sie/es"},
+ {i:"lesen",f:["lese","liest","liest","lesen","lest","lesen"],c:"einen Roman",n:"e → ie con du y er/sie/es"},
+ {i:"essen",f:["esse","isst","isst","essen","esst","essen"],c:"kein Fleisch",n:"e → i con du y er/sie/es"},
+ {i:"nehmen",f:["nehme","nimmst","nimmt","nehmen","nehmt","nehmen"],c:"den Zug um acht",n:"irregular: nimmst, nimmt"},
+ {i:"sehen",f:["sehe","siehst","sieht","sehen","seht","sehen"],c:"einen Film auf Deutsch",n:"e → ie con du y er/sie/es"},
+ {i:"haben",f:["habe","hast","hat","haben","habt","haben"],c:"keine Zeit",n:"verbo irregular"},
+ {i:"sein",f:["bin","bist","ist","sind","seid","sind"],c:"sehr müde",n:"verbo irregular"},
+ {i:"können",f:["kann","kannst","kann","können","könnt","können"],c:"gut kochen",n:"verbo modal: ich y er/sie/es no llevan terminación"},
+ {i:"müssen",f:["muss","musst","muss","müssen","müsst","müssen"],c:"lange arbeiten",n:"verbo modal: ich y er/sie/es no llevan terminación"},
+ {i:"wollen",f:["will","willst","will","wollen","wollt","wollen"],c:"in Deutschland studieren",n:"verbo modal: ich y er/sie/es no llevan terminación"},
+ {i:"wissen",f:["weiß","weißt","weiß","wissen","wisst","wissen"],c:"die Antwort nicht",n:"irregular: ich weiß, er weiß"},
+ {i:"sein",p:1,f:["war","warst","war","waren","wart","waren"],c:"sehr müde",n:"Präteritum de sein"},
+ {i:"haben",p:1,f:["hatte","hattest","hatte","hatten","hattet","hatten"],c:"keine Zeit",n:"Präteritum de haben"},
+ {i:"können",p:1,f:["konnte","konntest","konnte","konnten","konntet","konnten"],c:"nicht kommen",n:"Präteritum de können (sin Umlaut)"},
+ {i:"müssen",p:1,f:["musste","musstest","musste","mussten","musstet","mussten"],c:"lange warten",n:"Präteritum de müssen (sin Umlaut)"}
+];
+const SUBJ = [["Ich",0],["Du",1],["Er",2],["Maria",2],["Mein Bruder",2],["Das Kind",2],["Wir",3],["Ihr",4],["Meine Eltern",5],["Die Kinder",5]];
+const PERS_ES = ["ich","du","er/sie/es","wir","ihr","sie/Sie"];
+function verbItem(){
+  const v = rnd(VERBS), [s,p] = rnd(SUBJ), form = v.f[p], sp = cSplit(form);
+  const inv = v.p || Math.random()<0.4;
+  const low = (s==="Maria") ? s : s[0].toLowerCase()+s.slice(1);
+  const time = v.p ? rnd(["Gestern","Letzte Woche"]) : rnd(["Heute","Jetzt"]);
+  const expl = `«${v.i}» con ${PERS_ES[p]} → ${form}${v.n?". "+cap(v.n):""}.`;
+  if(inv) return {type:"gap",before:time+" ",prefix:sp.prefix,ans:sp.ans,post:` ${low} ${v.c}.`,expl};
+  return {type:"gap",before:s+" ",prefix:sp.prefix,ans:sp.ans,post:` ${v.c}.`,expl};
+}
+
+const PL = [
+ ["n","Buch","Bücher","obj","neutro de una sílaba: -er con Umlaut"],["n","Kind","Kinder","pers","neutro de una sílaba: -er"],["n","Haus","Häuser","place","neutro de una sílaba: -er con Umlaut"],
+ ["m","Mann","Männer","pers","-er con Umlaut (excepción masculina)"],["f","Frau","Frauen","pers","femenino: -en"],["m","Tag","Tage","time","masculino: -e"],
+ ["m","Stuhl","Stühle","obj","masculino: -e con Umlaut"],["m","Apfel","Äpfel","obj","masculino en -el: solo Umlaut"],["f","Zeitung","Zeitungen","obj","-ung: -en"],
+ ["m","Student","Studenten","pers","masculino débil: -en"],["n","Auto","Autos","obj","palabra extranjera: -s"],["n","Kino","Kinos","place","termina en vocal: -s"],
+ ["f","Stadt","Städte","geo","femenino de una sílaba: -e con Umlaut"],["n","Land","Länder","geo","neutro de una sílaba: -er con Umlaut"],["m","Freund","Freunde","pers","masculino: -e"],
+ ["f","Lampe","Lampen","obj","femenino en -e: -n"],["m","Tisch","Tische","obj","masculino: -e"],["m","Bruder","Brüder","pers","masculino en -er: solo Umlaut"],
+ ["f","Schwester","Schwestern","pers","femenino en -er: -n"],["n","Zimmer","Zimmer","obj","neutro en -er: igual que el singular"],["m","Lehrer","Lehrer","pers","masculino en -er: igual que el singular"],
+ ["f","Uhr","Uhren","obj","femenino: -en"],["f","Woche","Wochen","time","femenino en -e: -n"],["n","Jahr","Jahre","time","neutro: -e"],
+ ["n","Hotel","Hotels","place","palabra extranjera: -s"],["f","Sprache","Sprachen","lang","femenino en -e: -n"],["n","Problem","Probleme","abs","neutro: -e"],
+ ["f","Idee","Ideen","abs","femenino en -e: -n"],["f","Universität","Universitäten","place","-tät: -en"],["m","Sohn","Söhne","pers","masculino: -e con Umlaut"]
+];
+const PL_FR = {obj:["Ich sehe dort zwei {PL}.","Wir brauchen drei {PL}.","Auf dem Bild sind viele {PL}."],pers:["Dort warten zwei {PL}.","Auf dem Foto sind drei {PL}."],place:["In dieser Stadt gibt es viele {PL}.","Auf der Karte sehe ich zwei {PL}."],geo:["In Europa gibt es viele {PL}.","Wir haben drei {PL} besucht."],time:["Ich bleibe drei {PL} in Berlin.","Das dauert zwei {PL}."],abs:["Wir haben viele {PL}.","Es gibt zwei {PL}."],lang:["Sie spricht drei {PL}.","Er lernt zwei {PL}."]};
+function pluralItem(){
+  const [g,s,pl,t,rule] = rnd(PL), [pre,post] = rnd(PL_FR[t]).split("{PL}"), sp = cSplit(pl);
+  return {type:"gap",before:pre,prefix:sp.prefix,ans:sp.ans,post,hint:`${DEF.nom[g]} ${s}`,expl:`${DEF.nom[g]} ${s} → die ${pl}: ${rule}.`};
+}
+
+/* =========================================================
+   CATEGORÍAS DE EJERCICIOS
+   Formato fijo: el texto entre [ ] es lo que hay que escribir.
+   ========================================================= */
+const DRILLS = {
+ nom:{name:"Nominativo",lesson:true,gen:()=>npItem("nom",false)},
+ akk:{name:"Acusativo",lesson:true,gen:()=>caseItem("akk")},
+ dat:{name:"Dativo",lesson:true,gen:()=>caseItem("dat")},
+ gen:{name:"Genitivo",lesson:true,gen:()=>npItem("gen",false)},
+ casos:{name:"Casos mezclados",fixedShare:0.2,gen:()=>Math.random()<0.3?mcItem():caseItem(rnd(["nom","akk","dat","gen"])),
+ tip:`<p>Mezcla los cuatro casos en la misma ronda, como en un texto real. Algunas preguntas te piden escribir la terminación; otras, identificar el caso de la parte resaltada. Si todavía no has visto las clases, empieza por «¿Qué es un caso?».</p>`,
+ items:[
+  ["Ich sehe d[en] Mann im Park.","Acusativo masculino: el hombre es lo que veo (objeto directo) → den."],
+  ["Wir helfen d[er] Frau mit den Taschen.","«helfen» exige dativo; femenino en dativo → der."],
+  ["Das ist das Auto d[es] Lehrers.","Genitivo masculino (de quién es) → des, y el sustantivo lleva -s."],
+  ["Sie gibt d[em] Kind einen Apfel.","A quién da algo = dativo; neutro en dativo → dem."],
+  ["Ich wohne bei ein[er] Familie.","«bei» siempre rige dativo; femenino → einer."],
+  ["Mit d[en] Kindern spielen wir Fußball.","«mit» + dativo plural → den, y el sustantivo termina en -n."],
+  ["Der Hund d[er] Nachbarin bellt laut.","Genitivo femenino → der."],
+  ["Das Geschenk ist für mein[en] Vater.","«für» siempre rige acusativo; masculino → meinen."],
+  ["Ich komme gerade aus d[er] Schule.","«aus» + dativo; die Schule es femenino → der."],
+  ["Wir fahren mit d[em] Zug nach Berlin.","«mit» + dativo; der Zug es masculino → dem."]
+ ]},
+ adjetivos:{name:"Adjetivos",fixedShare:0.3,gen:()=>npItem(rnd(["nom","akk","dat","gen"]),true),
+ tip:`<p>La terminación del adjetivo depende de lo que va delante. Regla práctica:</p>
+ <p><b>Tras der/die/das</b> (artículo definido): <b>-e</b> en nominativo singular y en acusativo femenino y neutro; <b>-en</b> en todo lo demás.<br>
+ <b>Tras ein/kein/mein</b>: si el artículo no muestra el género (ein Mann, ein Haus), el adjetivo lo muestra: <b>-er</b> (masculino), <b>-es</b> (neutro). En dativo, genitivo y plural: <b>-en</b>.<br>
+ <b>Sin artículo</b>: el adjetivo toma la terminación que tendría el artículo definido: kalt<b>en</b> Kaffee (den), frisch<b>es</b> Brot (das).</p>`,
+ items:[
+  ["Ich trinke gern kalt[en] Kaffee.","Sin artículo, acusativo masculino (den) → -en."],
+  ["Frisch[es] Brot schmeckt am besten.","Sin artículo, neutro nominativo (das) → -es."],
+  ["Das ist die Meinung viel[er] junger Menschen.","Genitivo plural sin artículo → -er."],
+  ["Mit gut[en] Freunden ist alles leichter.","Sin artículo, dativo plural → -en."],
+  ["Heiß[e] Schokolade ist mein Lieblingsgetränk.","Sin artículo, femenino nominativo (die) → -e."],
+  ["Bei schön[em] Wetter gehen wir spazieren.","Sin artículo, dativo neutro (dem) → -em."]
+ ]},
+ verbos:{name:"Verbos",fixedShare:0.3,gen:verbItem,
+ tip:`<p>Terminaciones del presente: ich <b>-e</b>, du <b>-st</b>, er/sie/es <b>-t</b>, wir <b>-en</b>, ihr <b>-t</b>, sie/Sie <b>-en</b>.</p>
+ <p>El Perfekt usa <i>haben</i> o <i>sein</i> + participio (ge…t / ge…en). Los verbos de movimiento o cambio de estado usan <i>sein</i>: ich <b>bin</b> gegangen. En los textos del examen verás mucho Präteritum de sein, haben y los modales: war, hatte, konnte, musste.</p>`,
+ items:[
+  ["Sie ist nach Hause gegang[en].","Participio de gehen: gegangen (verbo fuerte → -en)."],
+  ["Ich habe das Buch geles[en].","Participio de lesen: gelesen."],
+  ["Das Haus wurde vor zwanzig Jahren gebau[t].","Participio regular: ge…t → gebaut."],
+  ["Wenn ich Zeit hätt[e], würde ich reisen.","Konjunktiv II de haben: ich hätte."],
+  ["Wir sind gestern ins Kino gegang[en].","Movimiento → sein + gegangen."],
+  ["Hast du schon gegess[en]?","Participio de essen: gegessen."],
+  ["Er hat mir nicht geantworte[t].","Participio regular de antworten: geantwortet."]
+ ]},
+ funcion:{name:"Palabras pequeñas",
+ tip:`<p>La mitad de los huecos del onSET son palabras cortas y frecuentes: conjunciones, preposiciones, pronombres y verbos auxiliares. Se cortan por la mitad: <b>we</b>___ = weil, <b>d</b>___ = dass/der/die…, <b>a</b>___ = auf/aus.</p>
+ <p>Si la palabra tiene letras impares, falta una letra más de las que ves. Aprende de memoria las 100 palabras más frecuentes del alemán: son puntos casi seguros.</p>`,
+ items:[
+  ["Ich bleibe zu Hause, we[il] ich krank bin.","«weil» (porque) manda el verbo al final."],
+  ["Er sagt, da[ss] er morgen kommt.","«dass» (que) introduce una oración subordinada."],
+  ["Wir gehen spazieren, obw[ohl] es regnet.","«obwohl» (aunque)."],
+  ["Ich warte a[uf] den Bus.","warten auf + acusativo."],
+  ["Das ist ni[cht] richtig.","«nicht» niega el adjetivo."],
+  ["Sie kommt a[us] Kolumbien.","kommen aus = venir de (origen)."],
+  ["Kannst du m[ir] helfen?","helfen + dativo → mir."],
+  ["Wir fahren im Sommer na[ch] Italien.","nach + países sin artículo."],
+  ["Er ist müde, ab[er] er arbeitet weiter.","«aber» (pero)."],
+  ["Ich interessiere mich f[ür] Kunst.","sich interessieren für."],
+  ["Es gi[bt] viele Möglichkeiten.","«es gibt» = hay."],
+  ["Ich weiß nicht, o[b] er kommt.","«ob» = si (pregunta indirecta)."],
+  ["Wir si[nd] seit zwei Jahren hier.","sein con wir → sind."],
+  ["Das Buch li[egt] auf dem Tisch.","liegen → er/es liegt."],
+  ["Er fährt z[ur] Arbeit.","zu + der = zur."],
+  ["Wir warten, b[is] der Bus kommt.","«bis» (hasta que)."],
+  ["Sie ist größer a[ls] ich.","Comparativo + «als» (que)."],
+  ["Ich trinke Kaffee od[er] Tee.","«oder» (o)."],
+  ["We[nn] ich Zeit habe, komme ich.","«wenn» (si, cuando) manda el verbo al final."],
+  ["Kommst du au[ch] mit?","«auch» (también)."],
+  ["Sie we[iß] es nicht.","wissen → sie weiß."],
+  ["Ich ka[nn] heute nicht kommen.","können → ich kann."],
+  ["Es ist sc[hon] spät.","«schon» (ya)."],
+  ["Ich bin no[ch] müde.","«noch» (todavía)."],
+  ["Wir haben keine Zeit, de[nn] wir arbeiten viel.","«denn» (pues, porque) no cambia el orden."],
+  ["Er hat sehr vi[el] gelernt.","«viel» (mucho)."]
+ ]},
+ plural:{name:"Plural y género",fixedShare:0,gen:pluralItem,
+ tip:`<p>El plural alemán no es regular como el español. Patrones útiles:</p>
+ <p>Femeninos en -e, -ung, -heit, -keit, -tät → <b>-(e)n</b> (die Frauen, die Zeitungen).<br>
+ Muchos neutros de una sílaba → <b>-er</b> con Umlaut (Kind → Kinder, Buch → Bücher).<br>
+ Masculinos → a menudo <b>-e</b>, a veces con Umlaut (Stuhl → Stühle).<br>
+ Masculinos y neutros en -er, -el, -en → no cambian o solo llevan Umlaut (der Lehrer → die Lehrer, der Apfel → die Äpfel).<br>
+ Palabras extranjeras → <b>-s</b> (Kino → Kinos, Auto → Autos).</p>
+ <p>Aprende cada sustantivo con su artículo y su plural: <i>das Buch, die Bücher</i>.</p>`}
+};
+function itemKey(it){ return it.type==="mc" ? "mc|"+it.pre+it.np+it.post : it.before+"|"+it.prefix+"|"+it.ans+"|"+it.post; }
+function makeItems(k, n){
+  const cat = DRILLS[k], out = [], seen = new Set();
+  const fixed = cat.items ? shuffle(cat.items).map(([s,e])=>({type:"gap",...parseDrill(s),expl:e})) : [];
+  const nFixed = cat.gen ? Math.round(n*(cat.fixedShare||0)) : n;
+  for(const it of fixed.slice(0,nFixed)){ out.push(it); seen.add(itemKey(it)); }
+  let tries = 0;
+  while(out.length<n && cat.gen && tries<600){ tries++; const it = cat.gen(); if(!it) continue; const key = itemKey(it); if(seen.has(key)) continue; seen.add(key); out.push(it); }
+  return shuffle(out);
+}
+function parseDrill(str){ const i=str.indexOf("["), j=str.indexOf("]"); const pre=str.slice(0,i), ans=str.slice(i+1,j), post=str.slice(j+1); const ws=pre.match(/[A-Za-zÄÖÜäöüß]*$/)[0]; return {before:pre.slice(0,pre.length-ws.length),prefix:ws,ans,post}; }
+
+const PLAN = [
+ {w:"Semana 1",title:"Base: artículos, casos y palabras frecuentes",tasks:[
+  ["p1a","Estudia las clases «¿Qué es un caso?», «Nominativo» y «Acusativo», con 2 rondas de ejercicios de cada una.","drills"],
+  ["p1b","Completa 3 textos A1 en Práctica, sin cronómetro.","practice"],
+  ["p1c","Aprende 150 palabras frecuentes con artículo y plural (Anki, escribiendo la respuesta).",null],
+  ["p1d","Haz 2 rondas de «Palabras pequeñas».","drills"],
+  ["p1e","Haz 2 textos A2 y guarda tus errores.","practice"],
+  ["p1f","Repasa todos tus errores guardados.","review"],
+  ["p1g","Haz 3 rondas del «Test de artículos».","quiz"]]},
+ {w:"Semana 2",title:"Terminaciones y verbos",tasks:[
+  ["p2a","3 rondas de «Adjetivos» con al menos 70 %.","drills"],
+  ["p2b","3 rondas de «Verbos».","drills"],
+  ["p2g","Estudia las clases «Dativo» y «Genitivo», con 3 rondas de cada una (mínimo 70 %).","drills"],
+  ["p2c","Completa al menos 5 textos A2 con 70 % o más.","practice"],
+  ["p2d","Haz tu primer simulacro completo (diagnóstico).","sim"],
+  ["p2e","Crea 2 C-Tests con noticias de nivel fácil (p. ej. DW «Nachrichten leicht»).","custom"],
+  ["p2f","Repaso de errores al final de cada día.","review"],
+  ["p2h","Haz 3 rondas del «Test de pronombres» y 1 simulacro fácil.","quiz"]]},
+ {w:"Semana 3",title:"Velocidad en B1",tasks:[
+  ["p3a","Haz los textos B1 con cronómetro de 5 minutos.","practice"],
+  ["p3b","2 rondas de «Plural y género».","drills"],
+  ["p3c","Lee 20 minutos al día en alemán de nivel B1 (noticias, blogs).",null],
+  ["p3d","Haz 2 simulacros y compara tu puntuación.","sim"],
+  ["p3e","Crea 3 C-Tests con textos sobre temas de estudio o trabajo.","custom"],
+  ["p3f","Repaso de errores: deja la lista por debajo de 20 palabras.","review"]]},
+ {w:"Semana 4",title:"Simulacros y textos B2",tasks:[
+  ["p4a","Haz los textos B2 con cronómetro.","practice"],
+  ["p4b","Haz 3 simulacros (uno cada dos días).","sim"],
+  ["p4c","Haz el test de muestra oficial en onset.de.",null],
+  ["p4d","Relee las 5 clases de los casos y haz 3 rondas de «Casos mezclados».","drills"],
+  ["p4e","Repaso final de errores.","review"],
+  ["p4f","Descansa el día antes del examen.",null]]}
+];
+
+/* =========================================================
+   ESTADO Y GUARDADO
+   ========================================================= */
+const LS_KEY = "luckenlos-v1";
+const blank = () => ({v:1,xp:0,history:[],errors:[],drills:{},plan:{},days:[],custom:[],best:{},updatedAt:0});
+let S = blank();
+let remote = null, saveTimer = null;
+
+function loadLocal(){ try{ const r = localStorage.getItem(LS_KEY); if(r){ S = Object.assign(blank(), JSON.parse(r)); } }catch(e){} }
+function save(){
+  S.updatedAt = Date.now();
+  if(S.history.length>300) S.history = S.history.slice(-300);
+  if(S.errors.length>300) S.errors = S.errors.slice(-300);
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){}
+  if(remote){ clearTimeout(saveTimer); saveTimer = setTimeout(()=>{ remote.set(JSON.parse(JSON.stringify(S))).catch(()=>{}); },1200); }
+}
+async function initRemote(){
+  try{
+    if(!window.claude || !window.claude.use) return;
+    const [user, db] = await Promise.all([window.claude.use("user"), window.claude.use("db")]);
+    if(!user || !db) return;
+    const uid = await user.id();
+    if(!uid) return;
+    const ref = db.doc("data/users/"+uid+"/progress");
+    const snap = await ref.get();
+    if(snap.exists){
+      const d = snap.data();
+      if(d && (d.updatedAt||0) > (S.updatedAt||0)){ S = Object.assign(blank(), JSON.parse(JSON.stringify(d))); try{localStorage.setItem(LS_KEY, JSON.stringify(S));}catch(e){} render(); }
+    }
+    remote = ref;
+    document.getElementById("syncNote").textContent = "Tu progreso se guarda en tu cuenta.";
+    if(!snap.exists && S.updatedAt) save();
+  }catch(e){}
+}
+
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const today = () => { const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const pct = (a,b) => b ? Math.round(a/b*100) : 0;
+const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),2200); }
+function markDay(){ const d=today(); if(!S.days.includes(d)){ S.days.push(d); if(S.days.length>400) S.days=S.days.slice(-400);} }
+function streak(){
+  const set = new Set(S.days); let n=0; const d=new Date();
+  if(!set.has(today())) d.setDate(d.getDate()-1);
+  while(true){ const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); if(set.has(k)){n++; d.setDate(d.getDate()-1);} else break; }
+  return n;
+}
+function grade(p){
+  if(p>=90) return {t:"Excelente",c:"ok"};
+  if(p>=75) return {t:"Muy bien",c:"ok"};
+  if(p>=60) return {t:"Bien",c:""};
+  if(p>=45) return {t:"Suficiente",c:""};
+  return {t:"Insuficiente",c:"bad"};
+}
+const LEVELS = ["A1","A2","B1","B2","C1"];
+const EDGES = [0,50,80,110,135,160]; // bandas orientativas sobre 160 puntos
+function scoreToPos(s){ for(let i=0;i<5;i++){ if(s<EDGES[i+1] || i===4) return Math.min(5, i + Math.max(0,(s-EDGES[i]))/(EDGES[i+1]-EDGES[i])); } return 5; }
+function scoreToLevel(s){ const p=scoreToPos(s); return p<1 ? "por debajo de A2" : LEVELS[Math.min(4,Math.floor(p))]; }
+function estimate(){
+  const sims = S.history.filter(h=>h.type==="sim").slice(-3);
+  if(sims.length){ const avg = sims.reduce((a,h)=>a+h.correct,0)/sims.length; return {pos:scoreToPos(avg),src:"sim",score:Math.round(avg),n:sims.length}; }
+  let best=null;
+  ["A1","A2","B1","B2"].forEach((L,i)=>{
+    const hs = S.history.filter(h=>h.type==="text"&&h.level===L).slice(-5);
+    if(!hs.length) return;
+    const a = hs.reduce((x,h)=>x+h.correct,0)/hs.reduce((x,h)=>x+h.total,0);
+    const c = a>=0.4 ? i + Math.min(1,(a-0.4)/0.5) : Math.max(0, i-1 + a/0.4);
+    if(best===null || c>best) best=c;
+  });
+  return best===null ? null : {pos:best,src:"practice"};
+}
+function posLabel(p){ return LEVELS[Math.min(4,Math.floor(p))]; }
+
+/* =========================================================
+   GENERADOR DE C-TEST (formato onSET)
+   Primera y última oración completas; en el resto se borra
+   la segunda mitad de cada segunda palabra. 20 huecos.
+   ========================================================= */
+function splitSentences(t){ return (t.replace(/\s+/g," ").trim().match(/[^.!?]+[.!?]+["»”)]*\s*|[^.!?]+$/g)) || [t]; }
+function buildCTest(text, maxGaps=20){
+  const sents = splitSentences(text);
+  const first = sents[0] || "";
+  const hasLast = sents.length>2;
+  const last = hasLast ? sents[sents.length-1] : "";
+  const middle = sents.slice(1, hasLast ? -1 : undefined).join("");
+  const parts = [{t:first}];
+  const re = /[A-Za-zÄÖÜäöüßÀ-ÿ]+/g;
+  let m, count=0, gaps=0, lastIdx=0;
+  while((m = re.exec(middle))){
+    const w = m[0];
+    if(w.length<2 || gaps>=maxGaps) continue;
+    count++;
+    if(count%2===0){
+      parts.push({t:middle.slice(lastIdx,m.index)});
+      const keep = Math.floor(w.length/2);
+      const ctx = (sents.find(s=>s.includes(w))||"").trim();
+      parts.push({gap:true,prefix:w.slice(0,keep),ans:w.slice(keep),full:w,ctx});
+      lastIdx = m.index + w.length; gaps++;
+    }
+  }
+  parts.push({t:middle.slice(lastIdx)});
+  if(last) parts.push({t:last});
+  return parts;
+}
+function gapCount(parts){ return parts.filter(p=>p.gap).length; }
+
+function renderCTest(parts, answers, checked){
+  let gi=0, html="";
+  for(const p of parts){
+    if(!p.gap){ html += esc(p.t); continue; }
+    const i = gi++;
+    if(!checked){
+      const w = p.prefix.length + 1;
+      html += `<span class="gapw">${esc(p.prefix)}<input data-gap="${i}" aria-label="Hueco ${i+1}: ${esc(p.prefix)}…" maxlength="${w}" style="width:${w+0.6}ch" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(answers[i]||"")}"></span>`;
+    } else {
+      const v = (answers[i]||"").trim();
+      if(v===p.ans) html += `<span class="gapw ok">${esc(p.prefix)}<b>${esc(p.ans)}</b></span>`;
+      else html += `<span class="gapw bad">${esc(p.prefix)}${v?`<s>${esc(v)}</s>`:""}<b>${esc(p.ans)}</b></span>`;
+    }
+  }
+  return html;
+}
+function readAnswers(){ const a=[]; document.querySelectorAll("input[data-gap]").forEach(inp=>a[+inp.dataset.gap]=inp.value); return a; }
+function scoreParts(parts, answers){
+  let gi=0, ok=0, missed=[];
+  for(const p of parts){ if(!p.gap) continue; const v=(answers[gi]||"").trim(); if(v===p.ans) ok++; else missed.push(p); gi++; }
+  return {ok, total:gi, missed};
+}
+function addErrors(missed, level){
+  for(const p of missed){
+    const ex = S.errors.find(e=>e.full===p.full && e.prefix===p.prefix);
+    if(ex){ ex.count++; ex.hits=0; ex.ctx = ex.ctx || p.ctx; }
+    else S.errors.push({full:p.full,prefix:p.prefix,ans:p.ans,ctx:p.ctx,level,count:1,hits:0});
+  }
+}
+const umlautBar = () => `<div class="umlauts" aria-label="Teclado alemán">${["ä","ö","ü","ß","Ä","Ö","Ü"].map(c=>`<button type="button" data-ch="${c}" aria-label="Insertar ${c}">${c}</button>`).join("")}</div>`;
+
+/* =========================================================
+   NAVEGACIÓN
+   ========================================================= */
+const VIEWS = [["dash","Panel"],["sim","Simulacro"],["practice","Práctica"],["drills","Gramática"],["quiz","Test"],["review","Repaso"],["custom","Mi texto"],["plan","Plan"]];
+let view = "dash", session = null, timer = null;
+function clearTimer(){ if(timer){ clearInterval(timer); timer=null; } }
+function go(v){ clearTimer(); session=null; view=v; render(); window.scrollTo(0,0); }
+function renderNav(){
+  const h = VIEWS.map(([k,l])=>`<button class="navbtn" data-view="${k}" ${view===k?'aria-current="page"':""}>${l}</button>`).join("");
+  $("#navSide").innerHTML = h; $("#navBottom").innerHTML = h;
+}
+function render(){
+  renderNav();
+  const m = $("#main");
+  ({dash:vDash,sim:vSim,practice:vPractice,drills:vDrills,quiz:vQuiz,review:vReview,custom:vCustom,plan:vPlan})[view](m);
+  const first = m.querySelector("input[data-gap]");
+  if(first && session && !session.checked) setTimeout(()=>first.focus({preventScroll:true}),30);
+}
+
+/* =========================================================
+   PANEL
+   ========================================================= */
+function vDash(m){
+  const est = estimate();
+  const pos = est ? est.pos : 0;
+  const lvl = est ? (pos<1 && est.src==="sim" ? "A1" : posLabel(pos)) : "—";
+  const sub = !est ? "Haz un texto de práctica o un simulacro para calcular tu nivel."
+    : est.src==="sim" ? `Media de tus últimos ${est.n} simulacros: ${est.score} de 160 puntos.`
+    : "Estimación a partir de tus textos de práctica. Un simulacro la hace más precisa.";
+  const recent = S.history.slice(-10);
+  const acc = recent.length ? pct(recent.reduce((a,h)=>a+h.correct,0), recent.reduce((a,h)=>a+h.total,0)) : null;
+  const sims = S.history.filter(h=>h.type==="sim");
+  const bestSim = sims.length ? Math.max(...sims.map(h=>h.correct)) : null;
+  const todayGaps = S.history.filter(h=>h.date.slice(0,10)===today()).reduce((a,h)=>a+h.total,0);
+
+  m.innerHTML = `
+  <h1>Tu camino al onSET</h1>
+  <p class="lede">Entrena solo lo que mide el examen: completar palabras en textos cortos, con la terminación y la ortografía exactas, en 5 minutos por texto.</p>
+
+  <section class="panel ruler-wrap" aria-label="Nivel estimado">
+    <div class="ruler-head">
+      <div class="ruler-level">${lvl}<small>${esc(sub)}</small></div>
+      <div class="muted small">Meta: B1 como mínimo, B2 ideal.</div>
+    </div>
+    <div class="ruler">
+      <div class="bands">${LEVELS.map(()=>"<div></div>").join("")}</div>
+      <div class="fill" style="width:${est?pos/5*100:0}%"></div>
+      ${est?`<div class="you" style="left:${Math.max(3,Math.min(97,pos/5*100))}%">Tú</div>`:""}
+      <div class="goal" style="left:40%" title="Meta B1"></div>
+      <div class="goal" style="left:60%" title="Meta B2"></div>
+      <div class="labels">${LEVELS.map((L,i)=>`<span class="${est && Math.floor(pos)>=i?"on":""}">${L}</span>`).join("")}</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="v">${S.xp}</span><span class="k">Puntos acumulados</span></div>
+      <div class="stat"><span class="v">${streak()} ${streak()===1?"día":"días"}</span><span class="k">Racha de estudio</span></div>
+      <div class="stat"><span class="v">${acc===null?"—":acc+" %"}</span><span class="k">Precisión (últimas 10)</span></div>
+      <div class="stat"><span class="v">${bestSim===null?"—":bestSim+"/160"}</span><span class="k">Mejor simulacro</span></div>
+    </div>
+  </section>
+
+  ${nextStep()}
+
+  <div class="grid g2">
+    <section class="panel">
+      <h2>Resultados recientes</h2>
+      ${chart()}
+    </section>
+    <section class="panel">
+      <h2>Hoy</h2>
+      <p class="small muted" style="margin-top:-6px">Meta diaria: 60 huecos (unos 3 textos).</p>
+      <div class="bar" style="margin:8px 0 6px"><i style="width:${Math.min(100,pct(todayGaps,60))}%"></i></div>
+      <p class="small"><b>${todayGaps}</b> de 60 huecos</p>
+      <h3 style="margin-top:18px">Dominio de gramática</h3>
+      <div class="mastery">${[...Object.entries(DRILLS),...Object.entries(QUIZ).map(([k,q])=>["q_"+k,q])].map(([k,d])=>{ const r=S.drills[k]||[]; const p=r.length?pct(r.filter(Boolean).length,r.length):0; return `<div class="m"><span>${d.name}</span><div class="bar"><i style="width:${p}%"></i></div><span class="small">${r.length?p+" %":"—"}</span></div>`; }).join("")}</div>
+    </section>
+  </div>
+
+  <section class="panel" style="margin-top:18px">
+    <h2>Actividad</h2>
+    ${S.history.length ? `<ul class="list">${S.history.slice(-8).reverse().map(h=>{ const p=pct(h.correct,h.total), g=grade(p); return `<li><span>${esc(h.label)} <span class="badge lv">${esc(h.level)}</span></span><span>${h.correct}/${h.total} <span class="badge ${g.c}">${g.t}</span></span></li>`; }).join("")}</ul>` : `<div class="empty">Aún no hay actividad. <button class="btn small" data-view="practice">Empieza con un texto A1</button></div>`}
+  </section>
+  <p class="small muted" style="margin-top:22px">Las bandas de nivel son orientativas para practicar (sobre 160 puntos: A2 desde 50, B1 desde 80, B2 desde 110, C1 desde 135). El resultado oficial lo da el onSET real; puedes probar el test de muestra en <a href="https://www.onset.de" target="_blank" rel="noopener">onset.de</a>.</p>`;
+}
+function nextStep(){
+  let t, v, b;
+  const texts = S.history.filter(h=>h.type==="text");
+  const weakDrill = Object.entries(DRILLS).map(([k,d])=>{const r=S.drills[k]||[]; return {k,d,n:r.length,p:r.length?r.filter(Boolean).length/r.length:0};}).sort((a,b)=>a.p-b.p)[0];
+  const lastSim = S.history.filter(h=>h.type==="sim").slice(-1)[0];
+  if(!S.history.length){ t="Empieza por un texto A1 para calentar y conocer el formato de los huecos."; v="practice"; b="Ir a Práctica"; }
+  else if(S.errors.length>=15){ t=`Tienes ${S.errors.length} palabras falladas guardadas. Repasarlas es la forma más rápida de subir puntos.`; v="review"; b="Repasar errores"; }
+  else if(weakDrill && weakDrill.p<0.7){ t=`Tu punto débil en gramática es «${weakDrill.d.name}». Una ronda de 10 frases te llevará 3 minutos.`; v="drills"; b="Practicar gramática"; }
+  else if(texts.length>=4 && (!lastSim || Date.now()-new Date(lastSim.date).getTime()>3*864e5)){ t="Hace tiempo que no haces un simulacro completo. Mide tu progreso con 8 textos cronometrados."; v="sim"; b="Hacer simulacro"; }
+  else { t="Sigue con textos del siguiente nivel. Cuando superes el 70 % en un nivel, pasa al siguiente."; v="practice"; b="Ir a Práctica"; }
+  return `<div class="next"><p style="margin:0 0 10px"><b>Siguiente paso.</b> ${esc(t)}</p><button class="btn small" data-view="${v}">${b}</button></div>`;
+}
+function chart(){
+  const h = S.history.filter(x=>x.type==="text"||x.type==="sim"||x.type==="custom").slice(-12);
+  if(h.length<2) return `<div class="empty">Completa al menos 2 textos para ver tu evolución.</div>`;
+  const W=460,H=190,P=30, step=(W-P*2)/(h.length-1);
+  const pts = h.map((x,i)=>[P+i*step, H-P-(pct(x.correct,x.total)/100)*(H-P*2)]);
+  const grid = [0,50,100].map(v=>{const y=H-P-(v/100)*(H-P*2); return `<line x1="${P}" x2="${W-P}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-dasharray="3 4"/><text x="${P-6}" y="${y+4}" text-anchor="end" font-size="11" fill="var(--muted)">${v}</text>`;}).join("");
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Porcentaje de aciertos en los últimos textos">${grid}
+   <polyline fill="none" stroke="var(--ink)" stroke-width="2.5" points="${pts.map(p=>p.join(",")).join(" ")}"/>
+   ${pts.map((p,i)=>h[i].type==="sim"?`<rect x="${p[0]-6}" y="${p[1]-6}" width="12" height="12" fill="var(--mark)" stroke="var(--ink)" stroke-width="1.5"><title>Simulacro: ${pct(h[i].correct,h[i].total)} %</title></rect>`:`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"><title>${esc(h[i].label)}: ${pct(h[i].correct,h[i].total)} %</title></circle>`).join("")}
+  </svg><p class="small muted" style="margin:6px 0 0">% de aciertos. Los cuadrados amarillos son simulacros.</p></div>`;
+}
+
+/* =========================================================
+   SIMULACRO: 8 textos x 5 minutos x 20 huecos
+   ========================================================= */
+function pick(level,n){ return shuffle(TEXTS.filter(t=>t.level===level)).slice(0,n); }
+function vSim(m){
+  if(session && session.kind==="simEasy") return easySim(m);
+  if(!session || session.kind!=="sim"){
+    m.innerHTML = `<h1>Simulacro onSET</h1>
+    <p class="lede">Como el examen real: 8 textos de dificultad creciente, 20 huecos cada uno y exactamente 5 minutos por texto. Cuando se acaba el tiempo, pasa al siguiente automáticamente. Puntuación máxima: 160.</p>
+    <section class="panel">
+      <h2>Antes de empezar</h2>
+      <p>Necesitas unos 40 minutos sin interrupciones. Usa el teclado alemán de la pantalla para ä, ö, ü y ß. Pulsa <b>Enter</b> o <b>Tab</b> para saltar al siguiente hueco.</p>
+      <p class="muted small">Cada hueco tiene tantas letras como las que ves o una más. Los textos van de A2 a B2 y salen al azar de un banco de ${TEXTS.filter(t=>t.level!=="A1").length} textos.</p>
+      <button class="btn" id="startSim">Empezar simulacro real</button>
+    </section>
+    <section class="panel" style="margin-top:18px">
+      <h2>Simulacro fácil: elige entre 3 opciones</h2>
+      <p>El mismo formato (8 textos, 20 huecos, 5 minutos por texto), pero en cada hueco eliges la palabra correcta entre 3 opciones. En cuanto eliges, la respuesta queda fija y se marca como correcta o errónea.</p>
+      <p class="muted small">Ideal para empezar o para calentar antes del simulacro real. No cuenta para tu nivel estimado.</p>
+      <button class="btn ghost" id="startEasy">Empezar simulacro fácil</button>
+    </section>`;
+    $("#startEasy").onclick = startEasySim;
+    $("#startSim").onclick = ()=>{
+      const list = [...pick("A2",2),...pick("B1",3),...pick("B2",3)];
+      session = {kind:"sim",list,parts:list.map(t=>buildCTest(t.text)),answers:list.map(()=>[]),idx:0,left:300,done:false};
+      startSimTimer(); render();
+    };
+    return;
+  }
+  if(session.done) return simResults(m);
+  const t = session.list[session.idx];
+  m.innerHTML = `<div class="dots" aria-label="Progreso">${session.list.map((_,i)=>`<span class="${i<session.idx?"done":i===session.idx?"cur":""}"></span>`).join("")}</div>
+  <article class="sheet">
+    <div class="meta"><h2>Texto ${session.idx+1} de 8: ${esc(t.title)}</h2><span class="timer" id="timer">5:00</span></div>
+    <div class="tbar"><i id="tbar" style="width:100%"></i></div>
+    <div class="ctext">${renderCTest(session.parts[session.idx], session.answers[session.idx], false)}</div>
+    ${umlautBar()}
+    <div class="row" style="margin-top:16px"><button class="btn" id="nextText">${session.idx<7?"Siguiente texto":"Terminar simulacro"}</button><span class="small muted">No podrás volver a este texto.</span></div>
+  </article>`;
+  updateTimer();
+  $("#nextText").onclick = ()=>simNext();
+}
+function startSimTimer(){ clearTimer(); timer = setInterval(()=>{ if(!session||session.kind!=="sim"||session.done){clearTimer();return;} session.left--; updateTimer(); if(session.left<=0){ toast("Tiempo agotado"); simNext(); } },1000); }
+function updateTimer(){ const el=$("#timer"); if(!el) return; const l=Math.max(0,session.left); el.textContent=Math.floor(l/60)+":"+String(l%60).padStart(2,"0"); el.classList.toggle("low",l<=60); const b=$("#tbar"); if(b) b.style.width=(l/300*100)+"%"; }
+function simNext(){
+  session.answers[session.idx] = readAnswers();
+  if(session.idx<7){ session.idx++; session.left=300; startSimTimer(); render(); window.scrollTo(0,0); }
+  else {
+    clearTimer(); session.done=true;
+    let tot=0; const per=[];
+    session.list.forEach((t,i)=>{ const r=scoreParts(session.parts[i],session.answers[i]); tot+=r.ok; per.push({title:t.title,level:t.level,ok:r.ok,total:r.total}); addErrors(r.missed,t.level); });
+    const max = per.reduce((a,p)=>a+p.total,0);
+    session.result = {tot,max,per};
+    S.history.push({type:"sim",label:"Simulacro",level:scoreToLevel(tot).replace("por debajo de A2","<A2"),correct:tot,total:max,date:new Date().toISOString()});
+    S.xp += tot + 20; markDay(); save(); render(); window.scrollTo(0,0);
+  }
+}
+function simResults(m){
+  const r = session.result, g = grade(pct(r.tot,r.max)), lvl = scoreToLevel(r.tot);
+  m.innerHTML = `<h1>Resultado del simulacro</h1>
+  <section class="panel">
+    <div class="score"><span class="big">${r.tot}/${r.max}</span><span class="badge ${g.c}">${g.t}</span><span>Nivel estimado: <b>${lvl}</b></span></div>
+    <p class="muted small">+${r.tot+20} puntos. Las palabras falladas se guardaron en Repaso.</p>
+    <ul class="list">${r.per.map((p,i)=>`<li><span>${i+1}. ${esc(p.title)} <span class="badge lv">${p.level}</span></span><span>${p.ok}/${p.total}</span></li>`).join("")}</ul>
+    <div class="row" style="margin-top:16px"><button class="btn" id="seeAns">Ver soluciones</button><button class="btn ghost" data-view="review">Repasar errores</button></div>
+  </section><div id="ansBox"></div>`;
+  $("#seeAns").onclick = ()=>{
+    $("#ansBox").innerHTML = session.list.map((t,i)=>`<article class="sheet" style="margin-top:16px"><div class="meta"><h2>${i+1}. ${esc(t.title)}</h2><span class="badge lv">${t.level}</span></div><div class="ctext">${renderCTest(session.parts[i],session.answers[i],true)}</div></article>`).join("");
+    $("#seeAns").disabled = true;
+  };
+}
+
+/* =========================================================
+   PRÁCTICA por niveles (y textos propios)
+   ========================================================= */
+function vPractice(m){
+  if(session && session.kind==="text") return textSession(m);
+  const desc = {A1:"Para calentar: vocabulario básico y presente.",A2:"El nivel más bajo que mide el onSET.",B1:"Tu meta mínima: Perfekt, subordinadas, más vocabulario.",B2:"Textos informativos con vocabulario abstracto."};
+  m.innerHTML = `<h1>Práctica por niveles</h1>
+  <p class="lede">Haz cada texto sin prisa, revisa tus fallos y repítelo hasta superar el 70 %. Activa el cronómetro cuando quieras entrenar la velocidad.</p>
+  <div class="levels">${["A1","A2","B1","B2"].map(L=>`<section><h2>${L} <span class="small muted" style="font-family:var(--sans);font-weight:400">${desc[L]}</span></h2>
+   <div class="tlist">${TEXTS.filter(t=>t.level===L).map(t=>{ const b=S.best[t.id]; const g=b!=null?grade(pct(b,20)):null; return `<button class="tcard" data-text="${t.id}"><span class="t">${esc(t.title)}</span><span class="small muted">${b!=null?`Mejor: ${b}/20 <span class="badge ${g.c}">${g.t}</span>`:"Sin hacer"}</span></button>`; }).join("")}</div></section>`).join("")}</div>`;
+  m.querySelectorAll("[data-text]").forEach(b=>b.onclick=()=>{ const t=TEXTS.find(x=>x.id===b.dataset.text); openText(t,"text"); });
+}
+function openText(t, type){
+  session = {kind:"text",type,t,parts:buildCTest(t.text),answers:[],checked:false,timed:session&&session.timedPref||false,left:300};
+  if(session.timed) startTextTimer();
+  if(type==="custom") view="custom";
+  render(); window.scrollTo(0,0);
+}
+function startTextTimer(){ clearTimer(); session.left=300; timer=setInterval(()=>{ if(!session||session.kind!=="text"||session.checked||!session.timed){clearTimer();return;} session.left--; updateTextTimer(); if(session.left<=0){ toast("Tiempo agotado"); checkText(); } },1000); }
+function updateTextTimer(){ const el=$("#timer"); if(!el) return; const l=Math.max(0,session.left); el.textContent=Math.floor(l/60)+":"+String(l%60).padStart(2,"0"); el.classList.toggle("low",l<=60); }
+function textSession(m){
+  const s = session, t = s.t, n = gapCount(s.parts);
+  let res = "";
+  if(s.checked){
+    const r = s.result, p=pct(r.ok,r.total), g=grade(p);
+    res = `<div class="score"><span class="big">${r.ok}/${r.total}</span><span class="badge ${g.c}">${g.t}</span><span class="muted">${p} % de aciertos. +${s.gained} puntos.</span></div>
+    ${r.missed.length?`<p class="small muted">Las ${r.missed.length} palabras falladas se guardaron en Repaso.</p>`:"<p class='small'>Texto perfecto.</p>"}
+    <div class="row"><button class="btn" id="again">Repetir texto</button><button class="btn ghost" id="back">${s.type==="custom"?"Crear otro texto":"Elegir otro texto"}</button></div>`;
+  }
+  m.innerHTML = `<article class="sheet">
+    <div class="meta"><h2>${esc(t.title)} <span class="badge lv">${esc(t.level)}</span></h2>
+      ${s.checked?"":`<div class="row"><label class="toggle"><input type="checkbox" id="timedT" ${s.timed?"checked":""}> Cronómetro 5 min</label>${s.timed?`<span class="timer" id="timer">5:00</span>`:""}</div>`}</div>
+    <p class="small muted" style="margin-top:-8px">${n} huecos. Completa la segunda mitad de cada palabra cortada.</p>
+    <div class="ctext">${renderCTest(s.parts,s.answers,s.checked)}</div>
+    ${s.checked?"":umlautBar()+`<div class="row" style="margin-top:16px"><button class="btn" id="check">Comprobar</button><button class="btn ghost" id="back">Salir</button></div>`}
+    ${res}
+  </article>`;
+  if(s.timed && !s.checked) updateTextTimer();
+  const tt=$("#timedT"); if(tt) tt.onchange=()=>{ s.answers=readAnswers(); s.timed=tt.checked; s.timedPref=tt.checked; if(s.timed) startTextTimer(); else clearTimer(); render(); };
+  const c=$("#check"); if(c) c.onclick=checkText;
+  const a=$("#again"); if(a) a.onclick=()=>{ const keep=s.timedPref; session={...s,answers:[],checked:false,left:300}; session.timedPref=keep; session.timed=keep; if(keep) startTextTimer(); render(); };
+  const b=$("#back"); if(b) b.onclick=()=>{ clearTimer(); session=null; render(); };
+}
+function checkText(){
+  const s=session; clearTimer();
+  s.answers = readAnswers();
+  const r = scoreParts(s.parts, s.answers);
+  s.result=r; s.checked=true;
+  const bonus = r.total && r.ok/r.total>=0.75 ? 5 : 0;
+  s.gained = r.ok + bonus;
+  S.xp += s.gained;
+  addErrors(r.missed, s.t.level);
+  if(s.type==="text") S.best[s.t.id] = Math.max(S.best[s.t.id]||0, r.ok);
+  if(s.type==="custom" && s.t.ci!=null && S.custom[s.t.ci]) S.custom[s.t.ci].best = Math.max(S.custom[s.t.ci].best||0, r.ok);
+  S.history.push({type:s.type,label:s.t.title,level:s.t.level,correct:r.ok,total:r.total,date:new Date().toISOString()});
+  markDay(); save(); render();
+}
+
+/* =========================================================
+   GRAMÁTICA: clases de los casos + ejercicios aleatorios
+   ========================================================= */
+function mastery(k){ const r=S.drills[k]||[]; return r.length ? pct(r.filter(Boolean).length,r.length) : null; }
+function startDrill(k, from){ session={kind:"drill",k,from:from||null,items:makeItems(k,10),answers:[],checked:false}; render(); window.scrollTo(0,0); }
+function vDrills(m){
+  if(session && session.kind==="drill") return drillSession(m);
+  if(session && session.kind==="lesson") return lessonView(m);
+  m.innerHTML = `<h1>Gramática para los huecos</h1>
+  <p class="lede">En el onSET no basta con reconocer la palabra: la terminación tiene que ser exacta. Empieza por las clases de los casos y luego refuerza con la práctica. Cada ronda se genera al azar, así que nunca vas a ver la misma lista dos veces.</p>
+  <h2>Clases de los casos</h2>
+  <div class="lessons">${LESSONS.map((L,i)=>{ const p=mastery(L.drill); return `<section class="panel lcard">
+    <span class="lnum" aria-hidden="true">${i+1}</span>
+    <div class="lbody"><h3>${esc(L.title)}</h3><p class="small muted">${esc(L.short)}</p>
+    <div class="row" style="margin:10px 0 12px"><div class="bar" style="flex:1;max-width:220px"><i style="width:${p||0}%"></i></div><span class="small">${p===null?"Sin ejercicios aún":"Dominio "+p+" %"}</span></div>
+    <div class="row"><button class="btn small" data-lesson="${L.id}">Abrir clase</button><button class="btn ghost small" data-drill="${L.drill}" data-from="${L.id}">Solo ejercicios</button></div></div>
+  </section>`; }).join("")}</div>
+  <h2 style="margin-top:36px">Más práctica</h2>
+  <div class="grid g2">${Object.entries(DRILLS).filter(([,d])=>!d.lesson).map(([k,d])=>{ const p=mastery(k); return `<section class="panel"><h3 style="font-family:var(--serif);font-size:1.2rem">${d.name}</h3>
+   <div class="row" style="margin:6px 0 12px"><div class="bar" style="flex:1"><i style="width:${p||0}%"></i></div><span class="small">${p===null?"Sin practicar":"Dominio "+p+" %"}</span></div>
+   <details><summary class="small" style="cursor:pointer;font-weight:700">Ver guía rápida</summary><div class="tip">${d.tip}</div></details>
+   <div class="row" style="margin-top:14px"><button class="btn small" data-drill="${k}">Hacer ronda de 10</button></div></section>`; }).join("")}</div>`;
+  m.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>{ session={kind:"lesson",id:b.dataset.lesson}; render(); window.scrollTo(0,0); });
+  m.querySelectorAll("[data-drill]").forEach(b=>b.onclick=()=>startDrill(b.dataset.drill, b.dataset.from));
+}
+function lessonView(m){
+  const idx = LESSONS.findIndex(x=>x.id===session.id), L = LESSONS[idx], prev = LESSONS[idx-1], next = LESSONS[idx+1];
+  const p = mastery(L.drill);
+  m.innerHTML = `<button class="btn ghost small" id="toGram">Volver a Gramática</button>
+  <p class="small muted" style="margin:22px 0 4px">Clase ${idx+1} de ${LESSONS.length}</p>
+  <h1>${esc(L.title)}</h1>
+  <p class="lede">${esc(L.short)}</p>
+  <div class="legend small"><span class="c-nom">Nominativo</span><span class="c-akk">Acusativo</span><span class="c-dat">Dativo</span><span class="c-gen">Genitivo</span></div>
+  <article class="panel lesson">${caseMarkHtml(L.body)}</article>
+  <section class="panel lesson" style="margin-top:18px">
+    <h2>Ejemplos</h2>
+    <ul class="ex">${L.examples.map(([de,es_])=>`<li><div class="de">${caseMark(de)}</div><div class="es">${esc(es_)}</div></li>`).join("")}</ul>
+  </section>
+  <section class="panel practice-cta" style="margin-top:18px">
+    <h2>Ahora practica</h2>
+    <p>10 ejercicios generados al azar sobre ${L.id==="intro"?"los cuatro casos mezclados":"el "+L.title.toLowerCase()}. Cada vez que empiezas, las frases, las palabras y el orden cambian.</p>
+    <div class="row"><button class="btn" id="goDrill">Hacer ejercicios</button><span class="small muted">${p===null?"":"Tu dominio actual: "+p+" %"}</span></div>
+  </section>
+  <div class="row" style="justify-content:space-between;margin-top:22px">
+    ${prev?`<button class="btn ghost small" data-lnav="${prev.id}">Clase anterior: ${esc(prev.title)}</button>`:"<span></span>"}
+    ${next?`<button class="btn ghost small" data-lnav="${next.id}">Siguiente clase: ${esc(next.title)}</button>`:""}
+  </div>`;
+  $("#toGram").onclick=()=>{ session=null; render(); window.scrollTo(0,0); };
+  $("#goDrill").onclick=()=>startDrill(L.drill, L.id);
+  m.querySelectorAll("[data-lnav]").forEach(b=>b.onclick=()=>{ session={kind:"lesson",id:b.dataset.lnav}; render(); window.scrollTo(0,0); });
+}
+function readDrillAnswers(s){
+  return s.items.map((it,i)=>{
+    if(it.type==="mc"){ const r=document.querySelector(`input[name="mc${i}"]:checked`); return r?r.value:""; }
+    const inp=document.querySelector(`input[data-gap="${i}"]`); return inp?inp.value:"";
+  });
+}
+function drillSession(m){
+  const s=session, d=DRILLS[s.k];
+  const hasMc = s.items.some(it=>it.type==="mc");
+  let ok=0;
+  const rows = s.items.map((it,i)=>{
+    if(it.type==="mc"){
+      const v=s.answers[i]||"", good=v===it.ans; if(s.checked&&good) ok++;
+      const opts = it.options.map(o=>{
+        const cls = !s.checked ? "" : o===it.ans ? "ok" : (o===v ? "bad" : "");
+        return `<label class="opt ${cls}"><input type="radio" name="mc${i}" value="${o}" ${v===o?"checked":""} ${s.checked?"disabled":""}> ${CASE_ES[o]}</label>`;
+      }).join("");
+      return `<div class="drill-item mcq"><div>${i+1}. ${esc(it.pre)}<span class="hl">${esc(it.np)}</span>${esc(it.post)}</div>
+        <div class="opts" role="radiogroup" aria-label="Caso de la frase ${i+1}">${opts}</div></div>${s.checked&&!good?`<p class="expl">${esc(it.expl)}</p>`:""}`;
+    }
+    const hint = it.hint ? `<span class="hint">(${esc(it.hint)})</span>` : "";
+    if(!s.checked){ const w=Math.max(it.ans.length,it.prefix.length)+2; return `<div class="drill-item">${i+1}. ${esc(it.before)}<span class="gapw">${esc(it.prefix)}<input data-gap="${i}" aria-label="Frase ${i+1}" style="width:${w+0.6}ch" maxlength="${w+2}" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(s.answers[i]||"")}"></span>${esc(it.post)}${hint}</div>`; }
+    const v=(s.answers[i]||"").trim(), good=v===it.ans; if(good) ok++;
+    return `<div class="drill-item">${i+1}. ${esc(it.before)}<span class="gapw ${good?"ok":"bad"}">${esc(it.prefix)}${!good&&v?`<s>${esc(v)}</s>`:""}<b>${esc(it.ans)}</b></span>${esc(it.post)}${hint}</div>${good?"":`<p class="expl">${esc(it.expl)}</p>`}`;
+  }).join("");
+  const backLabel = s.from ? "Volver a la clase" : "Volver a Gramática";
+  const res = s.checked ? (()=>{ const p=pct(ok,s.items.length), g=grade(p); return `<div class="score"><span class="big">${ok}/${s.items.length}</span><span class="badge ${g.c}">${g.t}</span><span class="muted">+${ok*2} puntos</span></div><div class="row"><button class="btn" id="again">Nueva ronda aleatoria</button><button class="btn ghost" id="back">${backLabel}</button></div>`; })() : "";
+  m.innerHTML = `<article class="sheet"><div class="meta"><h2>${d.name}</h2><span class="small muted">Ronda aleatoria</span></div>
+   <p class="small muted" style="margin-top:-8px">Escribe lo que falta${hasMc?". En las frases con opciones, elige el caso de la parte resaltada":""}.</p>
+   ${rows}${s.checked?"":umlautBar()+`<div class="row" style="margin-top:14px"><button class="btn" id="check">Comprobar</button><button class="btn ghost" id="back">Salir</button></div>`}${res}</article>`;
+  const c=$("#check"); if(c) c.onclick=()=>{
+    s.answers=readDrillAnswers(s); s.checked=true;
+    const arr=S.drills[s.k]||[]; let good=0;
+    s.items.forEach((it,i)=>{ const v=(s.answers[i]||"").trim(); const g=v===it.ans; if(g) good++; arr.push(g); });
+    S.drills[s.k]=arr.slice(-30);
+    S.xp+=good*2;
+    S.history.push({type:"drill",label:"Gramática: "+d.name,level:"Gram.",correct:good,total:s.items.length,date:new Date().toISOString()});
+    markDay(); save(); render(); window.scrollTo(0,0);
+  };
+  const a=$("#again"); if(a) a.onclick=()=>startDrill(s.k, s.from);
+  const b=$("#back"); if(b) b.onclick=()=>{ session = s.from ? {kind:"lesson",id:s.from} : null; render(); window.scrollTo(0,0); };
+}
+
+/* =========================================================
+   TEST DE SELECCIÓN MÚLTIPLE: artículos y pronombres
+   ========================================================= */
+const PNOM = {ich:["ich",0,"yo"],du:["du",1,"tú"],er:["er",2,"él"],sie:["sie",2,"ella"],wir:["wir",3,"nosotros"],ihr:["ihr",4,"ustedes, informal"],sie3:["sie",5,"ellos"],Sie:["Sie",5,"usted, formal"]};
+function artQuizItem(){
+  const c = rnd(["nom","akk","akk","dat","dat","gen"]);
+  const it = npItem(c,false,true); if(!it) return null;
+  const fam = it.dt==="def" ? ["der","die","das","den","dem","des"] : ["","e","en","em","er","es"].map(e=>STEM[it.dt]+e);
+  const raw = it.detRaw, fix = o => it.start ? cap(o) : o;
+  const opts = [raw, ...shuffle(fam.filter(f=>f!==raw)).slice(0,3)].map(fix);
+  return {pre:it.before, post:it.post, options:shuffle(opts), ans:fix(raw), cue:null, expl:it.expl, c};
+}
+function pronQuizItem(){
+  const c = rnd(["nom","akk","akk","dat","dat"]);
+  let pre, post, p, form, cue, r;
+  if(c==="nom"){
+    p = rnd(PRON); const [f,idx,cueN] = PNOM[p.k]; const v = rnd(VERBS.filter(x=>!x.p));
+    pre = rnd(["Heute","Jetzt","Morgen früh"])+" "+v.f[idx]+" "; post = " "+v.c+"."; form = f; cue = cueN; r = `es el sujeto del verbo «${v.i}»`;
+  } else {
+    const tp = rnd(PTPL.filter(x=>x.c===c)); p = rnd(PRON.filter(x=>!tp.x.includes(x.k)));
+    [pre, post] = tp.t.split("{PR}"); form = p[c]; cue = p.es; r = tp.r;
+  }
+  const own = shuffle([PNOM[p.k][0], p.akk, p.dat]);
+  const others = shuffle(PRON.filter(x=>x.k!==p.k)).map(x=> c==="nom" ? PNOM[x.k][0] : x[c]);
+  const set = [form]; for(const o of own.concat(others)) if(!set.includes(o) && set.length<4) set.push(o);
+  return {pre, post, options:shuffle(set), ans:form, cue, expl:`${CASE_ES[c]}. ${sent(r)} «${cue}» → ${form}.`, c};
+}
+const QUIZ = {
+  art:{name:"Test de artículos",desc:"Elige entre der, die, das, den, dem, des, ein, einen, meinem, keiner… según el caso y el género.",gen:artQuizItem},
+  pron:{name:"Test de pronombres",desc:"Elige entre ich, mich, mir, er, ihn, ihm, sie, ihr, ihnen… según la función en la frase.",gen:pronQuizItem}
+};
+function quizItems(mode,n){
+  const out=[], seen=new Set(); let t=0;
+  while(out.length<n && t<500){ t++; const it=QUIZ[mode].gen(); if(!it) continue; const k=it.pre+"|"+it.ans+"|"+it.post; if(seen.has(k)) continue; seen.add(k); out.push(it); }
+  return out;
+}
+function startQuiz(mode){ session={kind:"quiz",mode,items:quizItems(mode,15),i:0,picked:[],done:false}; render(); window.scrollTo(0,0); }
+function vQuiz(m){
+  if(session && session.kind==="quiz") return session.done ? quizResults(m) : quizQuestion(m);
+  m.innerHTML = `<h1>Test de artículos y pronombres</h1>
+  <p class="lede">Rondas de 15 preguntas de selección múltiple. Lee la frase, piensa en la función de la palabra que falta y elige la forma correcta. Las frases, los sustantivos, los géneros y el orden de las opciones cambian en cada ronda.</p>
+  <div class="grid g2">${Object.entries(QUIZ).map(([k,q])=>{ const p=mastery("q_"+k); return `<section class="panel">
+    <h2>${q.name}</h2><p class="small muted">${q.desc}</p>
+    <div class="row" style="margin:12px 0 14px"><div class="bar" style="flex:1"><i style="width:${p||0}%"></i></div><span class="small">${p===null?"Sin hacer":"Dominio "+p+" %"}</span></div>
+    <button class="btn" data-quiz="${k}">Empezar ronda de 15</button></section>`; }).join("")}</div>
+  <p class="small muted" style="margin-top:20px">Atajo de teclado: pulsa 1, 2, 3 o 4 para elegir y Enter para pasar a la siguiente pregunta. Si dudas, repasa las clases de los casos en Gramática.</p>`;
+  m.querySelectorAll("[data-quiz]").forEach(b=>b.onclick=()=>startQuiz(b.dataset.quiz));
+}
+function quizQuestion(m){
+  const s=session, it=s.items[s.i], picked=s.picked[s.i];
+  const answered = picked!==undefined;
+  m.innerHTML = `<div class="dots" aria-label="Progreso">${s.items.map((_,j)=>{ const pk=s.picked[j]; const cls = j===s.i ? "cur" : pk===undefined ? "" : (pk===s.items[j].ans ? "done" : "miss"); return `<span class="${cls}"></span>`; }).join("")}</div>
+  <article class="sheet quiz">
+    <div class="meta"><h2>${QUIZ[s.mode].name}</h2><span class="small muted">Pregunta ${s.i+1} de ${s.items.length}</span></div>
+    <p class="qsent">${esc(it.pre)}<span class="qblank ${answered?(picked===it.ans?"ok":"bad"):""}">${answered?esc(it.ans):"&nbsp;"}</span>${esc(it.post)}${it.cue?`<span class="hint">(${esc(it.cue)})</span>`:""}</p>
+    <div class="qopts">${it.options.map((o,j)=>{ const cls = !answered ? "" : o===it.ans ? "ok" : (o===picked ? "bad" : "dim"); return `<button class="qopt ${cls}" data-opt="${j}" ${answered?"disabled":""}><span class="k">${j+1}</span>${esc(o)}</button>`; }).join("")}</div>
+    ${answered?`<p class="expl" style="margin-top:16px">${picked===it.ans?"<b>Correcto.</b> ":"<b>Incorrecto.</b> "}${esc(it.expl)}</p>
+      <button class="btn" id="qnext">${s.i<s.items.length-1?"Siguiente pregunta":"Ver resultado"}</button>`:""}
+  </article>
+  <div class="row" style="margin-top:14px"><button class="btn ghost small" id="qexit">Salir del test</button></div>`;
+  m.querySelectorAll("[data-opt]").forEach(b=>b.onclick=()=>quizPick(+b.dataset.opt));
+  const n=$("#qnext"); if(n){ n.onclick=quizNext; n.focus({preventScroll:true}); }
+  $("#qexit").onclick=()=>{ session=null; render(); };
+}
+function quizPick(j){ const s=session; if(!s||s.kind!=="quiz"||s.done||s.picked[s.i]!==undefined) return; const it=s.items[s.i]; if(!it.options[j]) return; s.picked[s.i]=it.options[j]; render(); }
+function quizNext(){
+  const s=session; if(!s||s.picked[s.i]===undefined) return;
+  if(s.i<s.items.length-1){ s.i++; render(); return; }
+  s.done=true;
+  const good = s.items.filter((it,j)=>s.picked[j]===it.ans).length;
+  const key="q_"+s.mode, arr=S.drills[key]||[];
+  s.items.forEach((it,j)=>arr.push(s.picked[j]===it.ans)); S.drills[key]=arr.slice(-30);
+  S.xp+=good;
+  S.history.push({type:"quiz",label:QUIZ[s.mode].name,level:"Test",correct:good,total:s.items.length,date:new Date().toISOString()});
+  markDay(); save(); render(); window.scrollTo(0,0);
+}
+function quizResults(m){
+  const s=session, good=s.items.filter((it,j)=>s.picked[j]===it.ans).length, p=pct(good,s.items.length), g=grade(p);
+  const miss = s.items.map((it,j)=>({it,pk:s.picked[j]})).filter(x=>x.pk!==x.it.ans);
+  m.innerHTML = `<h1>${QUIZ[s.mode].name}: resultado</h1>
+  <section class="panel">
+    <div class="score" style="border:0;margin-top:0;padding-top:0"><span class="big">${good}/${s.items.length}</span><span class="badge ${g.c}">${g.t}</span><span class="muted">+${good} puntos</span></div>
+    ${miss.length?`<h3 style="margin-top:14px">Tus errores</h3><ul class="ex">${miss.map(({it,pk})=>`<li><div class="de">${esc(it.pre)}<span class="gapw bad"><s>${esc(pk)}</s> <b>${esc(it.ans)}</b></span>${esc(it.post)}${it.cue?`<span class="hint">(${esc(it.cue)})</span>`:""}</div><div class="es">${esc(it.expl)}</div></li>`).join("")}</ul>`:`<p>Ronda perfecta.</p>`}
+    <div class="row" style="margin-top:16px"><button class="btn" id="qagain">Nueva ronda aleatoria</button><button class="btn ghost" id="qback">Volver al test</button></div>
+  </section>`;
+  $("#qagain").onclick=()=>startQuiz(s.mode);
+  $("#qback").onclick=()=>{ session=null; render(); };
+}
+
+/* =========================================================
+   SIMULACRO FÁCIL: cada hueco con 3 opciones
+   ========================================================= */
+let VOCAB = null;
+function vocab(){ if(VOCAB) return VOCAB; const set=new Set(); TEXTS.forEach(t=>(t.text.match(/[A-Za-zÄÖÜäöüßÀ-ÿ]+/g)||[]).forEach(w=>{ if(w.length>1) set.add(w); })); VOCAB=[...set]; return VOCAB; }
+const ENDS = ["ern","ten","en","er","em","es","st","et","te","e","n","s","t"];
+function choicesFor(g){
+  const w=g.full, p=g.prefix;
+  const real = vocab().filter(v=>v!==w && v.startsWith(p) && v.length>p.length && Math.abs(v.length-w.length)<=3);
+  const morph = [], noun = /^[A-ZÄÖÜ]/.test(w);
+  const E1 = noun ? ["en","es","er","e","n","s"] : ENDS, E2s = noun ? ["","e","en","n","s","er"] : ["e","en","er","em","es","t","st","et","te","n"];
+  for(const E of E1){ if(!w.endsWith(E)) continue; const stem=w.slice(0,-E.length); if(stem.length<p.length) continue; for(const E2 of E2s){ if(E2===E) continue; if(E2==="n" && !/[e]$|el$|er$/.test(stem)) continue; if(E2==="en" && /e$/.test(stem)) continue; morph.push(stem+E2); } break; }
+  if(!noun){ morph.push(w+"e", w+"n"); } if(w.length-1>p.length) morph.push(w.slice(0,-1));
+  const ok = x => x!==w && x.startsWith(p) && x.length>p.length && x.length>2 && !/e{2}[a-z]?$|nnn|sss|(.)\1\1/.test(x);
+  const out=[w], take = arr => { const c=shuffle([...new Set(arr)].filter(x=>ok(x)&&!out.includes(x))); if(c.length){ out.push(c[0]); return true; } return false; };
+  if(real.length>=2 && Math.random()<0.7){ take(real); take(real); } else { take(real); }
+  while(out.length<3 && take(morph.concat(real))){}
+  let k=0; while(out.length<3){ k++; out.push(p+"e".repeat(k)+"n"); }
+  return shuffle(out);
+}
+function choiceSpan(p, a){
+  if(a===p.full) return `<span class="gapw ok"><b>${esc(p.full)}</b></span>`;
+  return `<span class="gapw bad"><s>${esc(a||"sin respuesta")}</s> <b>${esc(p.full)}</b></span>`;
+}
+function renderChoiceCTest(parts, opts, answers){
+  let gi=0, html="";
+  for(const p of parts){
+    if(!p.gap){ html+=esc(p.t); continue; }
+    const i=gi++, a=answers[i];
+    if(a===undefined) html+=`<select class="choice" data-choice="${i}" aria-label="Hueco ${i+1}: ${esc(p.prefix)}…"><option value="" selected disabled>${esc(p.prefix)}…</option>${opts[i].map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join("")}</select>`;
+    else html+=choiceSpan(p,a);
+  }
+  return html;
+}
+function gapList(parts){ return parts.filter(p=>p.gap); }
+function startEasySim(){
+  const list=[...pick("A2",2),...pick("B1",3),...pick("B2",3)];
+  const parts=list.map(t=>buildCTest(t.text));
+  session={kind:"simEasy",list,parts,opts:parts.map(ps=>gapList(ps).map(choicesFor)),answers:list.map(()=>[]),idx:0,left:300,done:false};
+  startEasyTimer(); render(); window.scrollTo(0,0);
+}
+function startEasyTimer(){ clearTimer(); timer=setInterval(()=>{ if(!session||session.kind!=="simEasy"||session.done){clearTimer();return;} session.left--; updateTimer(); if(session.left<=0){ toast("Tiempo agotado"); easyNext(); } },1000); }
+function easyLive(){ const s=session, gl=gapList(s.parts[s.idx]), a=s.answers[s.idx]; const done=a.filter(x=>x!==undefined).length, good=gl.filter((g,i)=>a[i]===g.full).length; const el=$("#liveScore"); if(el) el.textContent=`${good} correctas de ${done} respondidas`; }
+function easySim(m){
+  const s=session;
+  if(s.done) return easyResults(m);
+  const t=s.list[s.idx];
+  m.innerHTML = `<div class="dots" aria-label="Progreso">${s.list.map((_,i)=>`<span class="${i<s.idx?"done":i===s.idx?"cur":""}"></span>`).join("")}</div>
+  <article class="sheet">
+    <div class="meta"><h2>Texto ${s.idx+1} de 8: ${esc(t.title)} <span class="badge lv">${t.level}</span></h2><span class="timer" id="timer">5:00</span></div>
+    <div class="tbar"><i id="tbar" style="width:100%"></i></div>
+    <p class="small muted" style="margin-top:-8px">Elige la palabra correcta en cada hueco. La respuesta queda fija en cuanto la eliges. <span id="liveScore"></span></p>
+    <div class="ctext easy">${renderChoiceCTest(s.parts[s.idx], s.opts[s.idx], s.answers[s.idx])}</div>
+    <div class="row" style="margin-top:16px"><button class="btn" id="nextText">${s.idx<7?"Siguiente texto":"Terminar simulacro"}</button><span class="small muted">Los huecos sin responder cuentan como error.</span></div>
+  </article>`;
+  updateTimer(); easyLive();
+  $("#nextText").onclick=easyNext;
+  const f=m.querySelector("select.choice"); if(f) setTimeout(()=>f.focus({preventScroll:true}),30);
+}
+function easyChoose(sel){
+  const s=session; if(!s||s.kind!=="simEasy") return;
+  const i=+sel.dataset.choice, p=gapList(s.parts[s.idx])[i];
+  s.answers[s.idx][i]=sel.value;
+  const tmp=document.createElement("span"); tmp.innerHTML=choiceSpan(p,sel.value);
+  const node=tmp.firstChild; sel.replaceWith(node);
+  easyLive();
+  const next=document.querySelector("select.choice"); if(next) next.focus({preventScroll:true});
+}
+function easyNext(){
+  const s=session;
+  if(s.idx<7){ s.idx++; s.left=300; startEasyTimer(); render(); window.scrollTo(0,0); return; }
+  clearTimer(); s.done=true;
+  let tot=0, max=0; const per=[];
+  s.list.forEach((t,i)=>{ const gl=gapList(s.parts[i]); const ok=gl.filter((g,j)=>s.answers[i][j]===g.full).length; tot+=ok; max+=gl.length; per.push({title:t.title,level:t.level,ok,total:gl.length}); addErrors(gl.filter((g,j)=>s.answers[i][j]!==g.full), t.level); });
+  s.result={tot,max,per};
+  S.history.push({type:"easy",label:"Simulacro fácil",level:"Fácil",correct:tot,total:max,date:new Date().toISOString()});
+  S.xp += tot + 10; markDay(); save(); render(); window.scrollTo(0,0);
+}
+function easyResults(m){
+  const s=session, r=s.result, g=grade(pct(r.tot,r.max));
+  m.innerHTML = `<h1>Resultado del simulacro fácil</h1>
+  <section class="panel">
+    <div class="score" style="border:0;margin-top:0;padding-top:0"><span class="big">${r.tot}/${r.max}</span><span class="badge ${g.c}">${g.t}</span><span class="muted">${pct(r.tot,r.max)} % de aciertos. +${r.tot+10} puntos.</span></div>
+    <p class="small muted">Este modo es más fácil que el examen real, por eso no cuenta para tu nivel estimado. Cuando superes el 85 %, pasa al simulacro real. Las palabras falladas se guardaron en Repaso.</p>
+    <ul class="list">${r.per.map((p,i)=>`<li><span>${i+1}. ${esc(p.title)} <span class="badge lv">${p.level}</span></span><span>${p.ok}/${p.total}</span></li>`).join("")}</ul>
+    <div class="row" style="margin-top:16px"><button class="btn" id="seeAns">Ver textos corregidos</button><button class="btn ghost" id="againEasy">Otro simulacro fácil</button></div>
+  </section><div id="ansBox"></div>`;
+  $("#seeAns").onclick=()=>{ $("#ansBox").innerHTML = s.list.map((t,i)=>`<article class="sheet" style="margin-top:16px"><div class="meta"><h2>${i+1}. ${esc(t.title)}</h2><span class="badge lv">${t.level}</span></div><div class="ctext">${(()=>{ let gi=0; return s.parts[i].map(p=>p.gap?choiceSpan(p,s.answers[i][gi++]):esc(p.t)).join(""); })()}</div></article>`).join(""); $("#seeAns").disabled=true; };
+  $("#againEasy").onclick=startEasySim;
+}
+
+/* =========================================================
+   REPASO de errores
+   ========================================================= */
+function vReview(m){
+  if(session && session.kind==="review") return reviewSession(m);
+  const errs = S.errors.slice().sort((a,b)=>b.count-a.count);
+  m.innerHTML = `<h1>Repaso de errores</h1>
+  <p class="lede">Aquí se guardan las palabras que fallaste. Cada una desaparece de la lista cuando la aciertas dos veces seguidas.</p>
+  ${errs.length?`<section class="panel"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0">${errs.length} ${errs.length===1?"palabra":"palabras"}</h2><button class="btn" id="startRev">Repasar ${Math.min(15,errs.length)} ahora</button></div>
+   <ul class="list">${errs.slice(0,40).map(e=>`<li><span style="font-family:var(--serif)">${esc(e.prefix)}<b>${esc(e.ans)}</b></span><span class="small muted">${e.count} ${e.count===1?"fallo":"fallos"} ${e.hits?`<span class="badge ok">${e.hits}/2</span>`:""}</span></li>`).join("")}</ul>
+   ${errs.length>40?`<p class="small muted">Y ${errs.length-40} más.</p>`:""}</section>`
+   :`<div class="panel empty">No tienes errores guardados. Cuando falles un hueco en Práctica o en un simulacro, aparecerá aquí.<div style="margin-top:14px"><button class="btn small" data-view="practice">Ir a Práctica</button></div></div>`}`;
+  const st=$("#startRev"); if(st) st.onclick=()=>{
+    const pickE = errs.slice(0,30); const items = shuffle(pickE).slice(0,15);
+    session={kind:"review",items,answers:[],checked:false}; render(); window.scrollTo(0,0);
+  };
+}
+function reviewSession(m){
+  const s=session; let ok=0;
+  const rows = s.items.map((e,i)=>{
+    const ctx = e.ctx || e.full; const k = ctx.indexOf(e.full);
+    const before = k>=0?ctx.slice(0,k):"", after = k>=0?ctx.slice(k+e.full.length):"";
+    if(!s.checked){ const w=e.prefix.length+1; return `<div class="drill-item">${esc(before)}<span class="gapw">${esc(e.prefix)}<input data-gap="${i}" aria-label="Palabra ${i+1}" maxlength="${w}" style="width:${w+0.6}ch" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(s.answers[i]||"")}"></span>${esc(after)}</div>`; }
+    const v=(s.answers[i]||"").trim(), good=v===e.ans; if(good) ok++;
+    return `<div class="drill-item">${esc(before)}<span class="gapw ${good?"ok":"bad"}">${esc(e.prefix)}${!good&&v?`<s>${esc(v)}</s>`:""}<b>${esc(e.ans)}</b></span>${esc(after)}</div>`;
+  }).join("");
+  m.innerHTML = `<article class="sheet"><div class="meta"><h2>Repaso</h2><span class="small muted">${s.items.length} palabras</span></div>
+   ${rows}
+   ${s.checked?`<div class="score"><span class="big">${ok}/${s.items.length}</span><span class="badge ${grade(pct(ok,s.items.length)).c}">${grade(pct(ok,s.items.length)).t}</span><span class="muted">+${ok} puntos</span></div><div class="row"><button class="btn" id="back">Volver al repaso</button></div>`
+   :umlautBar()+`<div class="row" style="margin-top:14px"><button class="btn" id="check">Comprobar</button><button class="btn ghost" id="back">Salir</button></div>`}</article>`;
+  const c=$("#check"); if(c) c.onclick=()=>{
+    s.answers=readAnswers(); s.checked=true; let good=0;
+    s.items.forEach((e,i)=>{ const ref=S.errors.find(x=>x.full===e.full&&x.prefix===e.prefix); if(!ref) return; if((s.answers[i]||"").trim()===e.ans){ good++; ref.hits++; } else { ref.hits=0; ref.count++; } });
+    S.errors = S.errors.filter(x=>x.hits<2);
+    S.xp+=good;
+    S.history.push({type:"review",label:"Repaso de errores",level:"Rep.",correct:good,total:s.items.length,date:new Date().toISOString()});
+    markDay(); save(); render();
+  };
+  const b=$("#back"); if(b) b.onclick=()=>{ session=null; render(); };
+}
+
+/* =========================================================
+   MI TEXTO: convierte cualquier texto en un C-Test
+   ========================================================= */
+function vCustom(m){
+  if(session && session.kind==="text" && session.type==="custom") return textSession(m);
+  m.innerHTML = `<h1>Crea tu propio C-Test</h1>
+  <p class="lede">Pega un texto en alemán (una noticia, un párrafo de un libro, un artículo de tu carrera). La primera y la última oración quedan completas y se crean 20 huecos con el mismo método del onSET.</p>
+  <section class="panel">
+    <label for="ctitle" class="small" style="font-weight:700">Título</label>
+    <input id="ctitle" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:6px 0 14px;background:var(--surface)" placeholder="Por ejemplo: Nachricht vom Montag">
+    <label for="ctext" class="small" style="font-weight:700">Texto en alemán</label>
+    <textarea id="ctext" style="margin-top:6px" placeholder="Pega aquí al menos 4 o 5 oraciones (unas 80 palabras)."></textarea>
+    <p class="small muted" id="cmsg"></p>
+    <button class="btn" id="mk">Crear C-Test</button>
+  </section>
+  ${S.custom.length?`<section class="panel" style="margin-top:18px"><h2>Tus textos</h2><div class="tlist">${S.custom.map((c,i)=>`<button class="tcard" data-cust="${i}"><span class="t">${esc(c.title)}</span><span class="small muted">${c.best!=null?"Mejor: "+c.best+"/"+c.n:"Sin hacer"}</span></button>`).join("")}</div></section>`:""}`;
+  $("#mk").onclick=()=>{
+    const txt=$("#ctext").value.trim(), title=$("#ctitle").value.trim()||"Mi texto";
+    const parts=buildCTest(txt); const n=gapCount(parts);
+    if(splitSentences(txt).length<3 || n<8){ $("#cmsg").textContent="El texto es demasiado corto. Añade más oraciones para poder crear al menos 8 huecos."; return; }
+    S.custom.unshift({title,text:txt,n}); S.custom=S.custom.slice(0,12); save();
+    openText({id:"c-"+Date.now(),level:"Propio",title,text:txt,ci:0},"custom");
+  };
+  m.querySelectorAll("[data-cust]").forEach(b=>b.onclick=()=>{ const c=S.custom[+b.dataset.cust]; openText({id:"c",level:"Propio",title:c.title,text:c.text,ci:+b.dataset.cust},"custom"); });
+}
+
+/* =========================================================
+   PLAN de 4 semanas
+   ========================================================= */
+function vPlan(m){
+  const all = PLAN.flatMap(w=>w.tasks), done = all.filter(t=>S.plan[t[0]]).length;
+  m.innerHTML = `<h1>Plan de 4 semanas</h1>
+  <p class="lede">Unas 2 o 3 horas al día. Marca cada tarea al terminarla; el plan prioriza lo que da puntos en el onSET: terminaciones, palabras frecuentes y velocidad de lectura.</p>
+  <div class="row" style="margin-bottom:22px"><div class="bar" style="flex:1;max-width:420px"><i style="width:${pct(done,all.length)}%"></i></div><span class="small"><b>${done}</b> de ${all.length} tareas</span></div>
+  ${PLAN.map(w=>`<section class="panel week"><h2>${w.w}: ${esc(w.title)}</h2><ul class="tasks">${w.tasks.map(([id,txt,v])=>`<li class="${S.plan[id]?"done":""}"><input type="checkbox" id="${id}" data-task="${id}" ${S.plan[id]?"checked":""}><span><label for="${id}">${esc(txt)}</label>${v?` <button class="btn ghost small" style="margin-left:6px;padding:2px 10px" data-view="${v}">Abrir</button>`:""}</span></li>`).join("")}</ul></section>`).join("")}`;
+  m.querySelectorAll("[data-task]").forEach(cb=>cb.onchange=()=>{ S.plan[cb.dataset.task]=cb.checked; if(cb.checked){ S.xp+=3; markDay(); toast("+3 puntos"); } save(); render(); });
+}
+
+/* =========================================================
+   EVENTOS GLOBALES
+   ========================================================= */
+let lastInput = null;
+document.addEventListener("focusin", e=>{ if(e.target.matches("input[data-gap]")) lastInput=e.target; });
+document.addEventListener("mousedown", e=>{ if(e.target.closest(".umlauts button")) e.preventDefault(); });
+document.addEventListener("click", e=>{
+  const u = e.target.closest(".umlauts button");
+  if(u){ const inp = lastInput && document.body.contains(lastInput) ? lastInput : document.querySelector("input[data-gap]"); if(!inp) return;
+    const ch=u.dataset.ch, s=inp.selectionStart??inp.value.length, en=inp.selectionEnd??s;
+    if(inp.value.length - (en-s) >= inp.maxLength) return;
+    inp.value = inp.value.slice(0,s)+ch+inp.value.slice(en); inp.focus(); inp.setSelectionRange(s+1,s+1); return; }
+  const v = e.target.closest("[data-view]");
+  if(v){ go(v.dataset.view); return; }
+});
+document.addEventListener("change", e=>{ if(e.target.matches("select.choice")) easyChoose(e.target); });
+document.addEventListener("keydown", e=>{
+  if(view==="quiz" && session && session.kind==="quiz" && !session.done && !e.target.matches("input,textarea,select")){
+    if(/^[1-4]$/.test(e.key)){ quizPick(+e.key-1); return; }
+    if(e.key==="Enter" && session.picked[session.i]!==undefined){ e.preventDefault(); quizNext(); return; }
+  }
+  if(e.key==="Enter" && e.target.matches("input[data-gap]")){
+    e.preventDefault();
+    const all=[...document.querySelectorAll("input[data-gap]")]; const i=all.indexOf(e.target);
+    if(all[i+1]) all[i+1].focus(); else { const c=$("#check")||$("#nextText"); if(c) c.focus(); }
+  }
+});
+$("#resetBtn").onclick=()=>{ if(confirm("¿Borrar todo tu progreso? Esto no se puede deshacer.")){ S=blank(); save(); go("dash"); toast("Progreso borrado"); } };
+
+loadLocal();
+render();
+initRemote();
+</script>
+</body>
+</html>
