@@ -1,4 +1,4 @@
-/* Lückenlos: plan de estudio de 4 semanas */
+/* OnSet trainer: plan de estudio de 4 semanas */
 "use strict";
 
 const PLAN = [

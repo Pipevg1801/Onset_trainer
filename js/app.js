@@ -1,4 +1,4 @@
-/* Lückenlos: navegación, eventos globales e inicio. Se carga al final. */
+/* OnSet trainer: navegación, eventos globales e inicio. Se carga al final. */
 "use strict";
 
 /* =========================================================

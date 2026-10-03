@@ -1,4 +1,4 @@
-/* Lückenlos: clases de los casos gramaticales */
+/* OnSet trainer: clases de los casos gramaticales */
 "use strict";
 
 /* =========================================================

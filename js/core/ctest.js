@@ -1,4 +1,4 @@
-/* Lückenlos: generador y corrector de C-Tests con el método onSET */
+/* OnSet trainer: generador y corrector de C-Tests con el método onSET */
 "use strict";
 
 /* =========================================================

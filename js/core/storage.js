@@ -1,4 +1,4 @@
-/* Lückenlos: guardado del progreso */
+/* OnSet trainer: guardado del progreso */
 "use strict";
 
 /* =========================================================
@@ -21,7 +21,7 @@ function exportProgress(){
   const blob = new Blob([JSON.stringify(S,null,1)], {type:"application/json"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "luckenlos-progreso-"+today()+".json";
+  a.download = "onset-trainer-progreso-"+today()+".json";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
   toast("Progreso exportado");

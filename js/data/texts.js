@@ -1,4 +1,4 @@
-/* Lückenlos: textos en alemán por nivel. Para añadir uno, copia una línea y cambia id, level, title y text. */
+/* OnSet trainer: textos en alemán por nivel. Para añadir uno, copia una línea y cambia id, level, title y text. */
 "use strict";
 
 /* =========================================================

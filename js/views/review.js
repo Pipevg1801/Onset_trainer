@@ -1,4 +1,4 @@
-/* Lückenlos: vista Repaso de errores */
+/* OnSet trainer: vista Repaso de errores */
 "use strict";
 
 /* =========================================================

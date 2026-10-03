@@ -1,4 +1,4 @@
-/* Lückenlos: sustantivos, frases modelo, pronombres, verbos y plurales usados por los generadores de ejercicios */
+/* OnSet trainer: sustantivos, frases modelo, pronombres, verbos y plurales usados por los generadores de ejercicios */
 "use strict";
 
 // Sustantivos: [género, singular, genitivo (m/n), dativo plural]

@@ -1,4 +1,4 @@
-/* Lückenlos: generadores aleatorios de ejercicios (artículos, adjetivos, pronombres, verbos, plurales) */
+/* OnSet trainer: generadores aleatorios de ejercicios (artículos, adjetivos, pronombres, verbos, plurales) */
 "use strict";
 
 /* =========================================================

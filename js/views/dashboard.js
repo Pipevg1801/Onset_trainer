@@ -1,4 +1,4 @@
-/* Lückenlos: vista Panel */
+/* OnSet trainer: vista Panel */
 "use strict";
 
 /* =========================================================

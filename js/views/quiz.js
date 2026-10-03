@@ -1,4 +1,4 @@
-/* Lückenlos: vista Test de artículos y pronombres */
+/* OnSet trainer: vista Test de artículos y pronombres */
 "use strict";
 
 /* =========================================================

@@ -1,4 +1,4 @@
-/* Lückenlos: vista Gramática: clases y ejercicios */
+/* OnSet trainer: vista Gramática: clases y ejercicios */
 "use strict";
 
 /* =========================================================

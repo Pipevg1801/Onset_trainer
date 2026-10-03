@@ -1,4 +1,4 @@
-/* Lückenlos: categorías de ejercicios de gramática */
+/* OnSet trainer: categorías de ejercicios de gramática */
 "use strict";
 
 /* =========================================================

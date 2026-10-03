@@ -1,4 +1,4 @@
-/* Lückenlos: vistas Simulacro real y Simulacro fácil */
+/* OnSet trainer: vistas Simulacro real y Simulacro fácil */
 "use strict";
 
 /* =========================================================

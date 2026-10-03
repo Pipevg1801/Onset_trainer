@@ -1,4 +1,4 @@
-/* Lückenlos: vista Práctica por niveles */
+/* OnSet trainer: vista Práctica por niveles */
 "use strict";
 
 /* =========================================================

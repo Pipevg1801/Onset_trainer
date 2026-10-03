@@ -1,4 +1,4 @@
-/* Lückenlos: vista Plan de 4 semanas */
+/* OnSet trainer: vista Plan de 4 semanas */
 "use strict";
 
 /* =========================================================

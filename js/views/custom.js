@@ -1,4 +1,4 @@
-/* Lückenlos: vista Mi texto */
+/* OnSet trainer: vista Mi texto */
 "use strict";
 
 /* =========================================================
@@ -10,7 +10,7 @@ function vCustom(m){
   <p class="lede">Pega un texto en alemán (una noticia, un párrafo de un libro, un artículo de tu carrera). La primera y la última oración quedan completas y se crean 20 huecos con el mismo método del onSET.</p>
   <section class="panel">
     <label for="ctitle" class="small" style="font-weight:700">Título</label>
-    <input id="ctitle" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:6px 0 14px;background:var(--surface)" placeholder="Por ejemplo: Nachricht vom Montag">
+    <input id="ctitle" class="field" style="width:100%;margin:6px 0 14px" placeholder="Por ejemplo: Nachricht vom Montag">
     <label for="ctext" class="small" style="font-weight:700">Texto en alemán</label>
     <textarea id="ctext" style="margin-top:6px" placeholder="Pega aquí al menos 4 o 5 oraciones (unas 80 palabras)."></textarea>
     <p class="small muted" id="cmsg"></p>

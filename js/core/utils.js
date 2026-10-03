@@ -1,4 +1,4 @@
-/* Lückenlos: utilidades, calificaciones y nivel estimado */
+/* OnSet trainer: utilidades, calificaciones y nivel estimado */
 "use strict";
 
 /* =========================================================
