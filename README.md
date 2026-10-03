@@ -25,6 +25,12 @@ El onSET es un C-Test: 8 textos cortos, 20 huecos por texto y 5 minutos por text
 
 Estos rangos son orientativos y no son los cortes oficiales del onSET. Puedes hacer el test de muestra oficial en [onset.de](https://www.onset.de).
 
+## Cómo añadir contenido
+
+- **Un texto nuevo:** en `js/data/texts.js`, copia una línea y cambia `id` (único), `level` (A1, A2, B1 o B2), `title` y `text`. El texto necesita unas 80 palabras para que salgan 20 huecos. Los textos A2–B2 entran automáticamente en los simulacros.
+- **Una frase para los ejercicios de casos:** en `js/data/vocabulary.js`, añade una línea a `TPL`. `{NP}` es el hueco del artículo y el sustantivo, y `{singular|plural}` adapta el verbo.
+- **Un sustantivo:** añádelo a la lista que corresponda dentro de `NS`.
+
 
 ## Otros proyectos
 
