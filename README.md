@@ -34,4 +34,4 @@ Estos rangos son orientativos y no son los cortes oficiales del onSET. Puedes ha
 
 ## Otros proyectos
 
-Si estas interesado en otras maneras de mejorar tu progreso en alemán, prueba descargando la siguiente extension para firefox la cual convierte cualquier pagina de wikipedia en un examen OnSet. [click aqui](https://addons.mozilla.org/en-US/firefox/addon/onset-training-with-wikipedia/)
+Si estas interesado en otras maneras de mejorar tu progreso en alemán, prueba descargando la siguiente extension para firefox la cual convierte cualquier pagina de wikipedia en un examen OnSet. [click aqui](https://addons.mozilla.org/en-US/firefox/addon/onset_exam-in-wikipedia/)
